@@ -1,20 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
 import { FaUser } from "react-icons/fa6";
-import { Auto, Bike, Car } from "../../assets";
 import { MdAccessTime } from "react-icons/md";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { RiArrowDownWideLine } from "react-icons/ri";
+import { Auto, Bike, Car } from "../../assets";
 
 interface Props {
-  ridesModalRefOpen: MutableRefObject<HTMLDivElement | null>;
   setLocationModal: Dispatch<SetStateAction<boolean>>;
   setConfirmRideOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const BottomSearchModalForRides = ({
-  ridesModalRefOpen,
-  setLocationModal,
-  setConfirmRideOpen
-}: Props) => {
+const AllRidesModal = ({ setLocationModal, setConfirmRideOpen }: Props) => {
   const rides = [
     {
       id: 1,
@@ -47,11 +42,7 @@ const BottomSearchModalForRides = ({
 
   return (
     <div>
-      <div
-        ref={ridesModalRefOpen}
-        className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col 
-        gap-1 rounded-t-xl translate-y-full"
-      >
+      <div>
         <div
           onClick={() => {
             setLocationModal(false);
@@ -65,7 +56,10 @@ const BottomSearchModalForRides = ({
         {rides.map((ride) => (
           <div
             key={ride.id}
-            onClick={() =>  setConfirmRideOpen(true)}
+            onClick={() => {
+              setConfirmRideOpen(true)
+              setLocationModal(false)
+            }}
             className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
           >
@@ -100,4 +94,4 @@ const BottomSearchModalForRides = ({
   );
 };
 
-export default BottomSearchModalForRides;
+export default AllRidesModal;

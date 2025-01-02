@@ -1,13 +1,15 @@
-import LocationSearchModal from "./LocationSearchModal";
-import BottomSearchModalForRides from "./BottomSearchModalForRides";
+import AllLocationsModal from "./AllLocationsModal";
+import AllRidesModal from "./AllRidesModal"
 import ConfirmRideModal from "./ConfirmRideModal";
 import LookingForDriverModal from "./LookingForDriverModal";
 import WaitingForDriverModal from "./WaitingForDriverModal";
+import LocationSearchModal from "./LocationSearchModal";
 
 export {
-  LocationSearchModal,
-  BottomSearchModalForRides,
+  AllLocationsModal,
+  AllRidesModal,
   ConfirmRideModal,
   WaitingForDriverModal,
   LookingForDriverModal,
+  LocationSearchModal,
 };

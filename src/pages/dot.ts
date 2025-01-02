@@ -3,13 +3,12 @@ import gsap from "gsap";
 import { useRef, useState } from "react";
 import { MapTemprary, UberLogo } from "../assets";
 import {
-  LocationSearchModal,
   AllLocationsModal,
   AllRidesModal,
   ConfirmRideModal,
   LookingForDriverModal,
-  WaitingForDriverModal,
 } from "../components/organisms";
+import LocationSearchModal from "../components/organisms/LocationSearchModal";
 
 const UserHomePage = () => {
   // LocationSearchModal (Refs and State Variables)
@@ -34,11 +33,6 @@ const UserHomePage = () => {
   // LookingForDriverModal (Ref and state variables)
   const lookingForDriverModalRef = useRef<HTMLDivElement | null>(null);
   const [lookingForDriverModalOpen, setLookingForDriverModalOpen] =
-    useState(false);
-
-  // WaitingForDriverModal (Ref and state variables)
-  const waitingForDriverModalRef = useRef<HTMLDivElement | null>(null);
-  const [waitingForDriverModalOpen, setWaitingForDriverModalOpen] =
     useState(false);
 
   useGSAP(() => {
@@ -97,18 +91,6 @@ const UserHomePage = () => {
     }
   }, [lookingForDriverModalOpen]);
 
-  useGSAP(() => {
-    if (waitingForDriverModalOpen) {
-      gsap.to(waitingForDriverModalRef.current, {
-        y: 0,
-      });
-    } else {
-      gsap.to(waitingForDriverModalRef.current, {
-        y: "100%",
-      });
-    }
-  }, [waitingForDriverModalOpen]);
-
   return (
     <div className="h-full overflow-hidden relative">
       <div className="relative lg:w-96 lg:m-auto sm:w-96 sm:m-auto h-auto">
@@ -144,7 +126,7 @@ const UserHomePage = () => {
 
           <div
             ref={ridesModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
+            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full"
           >
             <AllRidesModal
               setLocationModal={setAllLocationsModalToOpenRideModal}
@@ -154,7 +136,7 @@ const UserHomePage = () => {
 
           <div
             ref={confirmRideModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
+            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full"
           >
             <ConfirmRideModal
               setConfirmRideOpen={setConfirmRideOpen}
@@ -162,21 +144,10 @@ const UserHomePage = () => {
             />
           </div>
 
-          <div
-            ref={lookingForDriverModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
-          >
+          <div ref={lookingForDriverModalRef}>
             <LookingForDriverModal
               setLookingForDriverModalOpen={setLookingForDriverModalOpen}
-            />
-          </div>
-
-          <div
-            ref={waitingForDriverModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl border-t-2 translate-y-full border-zinc-200"
-          >
-            <WaitingForDriverModal
-              setWaitingForDriverModalOpen={setWaitingForDriverModalOpen}
+              lookingForDriverModalOpen={lookingForDriverModalOpen}
             />
           </div>
         </div>

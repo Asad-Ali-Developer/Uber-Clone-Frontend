@@ -1,64 +1,64 @@
-import { Dispatch, SetStateAction } from "react";
-import { FaLocationDot } from "react-icons/fa6";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { RiArrowDownWideLine } from "react-icons/ri";
 
 interface Props {
-  setLocationModal: Dispatch<SetStateAction<boolean>>;
-  setIsLocationModalOpen: Dispatch<SetStateAction<boolean>>;
+  setLocationModalOpen: Dispatch<SetStateAction<boolean>>;
+  allLocationModalOpen: boolean;
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  locationModalCloseRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 const LocationSearchModal = ({
-  setLocationModal,
-  setIsLocationModalOpen,
+  inputRef,
+  allLocationModalOpen,
+  setLocationModalOpen,
+  locationModalCloseRef
 }: Props) => {
-  const locations = [
-    {
-      id: 1,
-      name: "Location 1",
-      address: "Mohallah Sarwar Colony Toba Road Jhang Saddar",
-    },
-    {
-      id: 2,
-      name: "Location 2",
-      address: "Phase 22B Shah Latif Town, Near Malir, Karachi",
-    },
-    {
-      id: 3,
-      name: "Location 3",
-      address: "Address 3",
-    },
-    {
-      id: 4,
-      name: "Location 4",
-      address: "Address 4",
-    },
-    {
-      id: 5,
-      name: "Location 5",
-      address: "Address 5",
-    },
-  ];
-
   return (
-    <div className="px-4 flex flex-col gap-1">
-      {/* Locations */}
-      {locations.map((location) => (
+    <div className="bg-white">
+      <div
+        className={`h-[30%] p-5 relative ${
+          !allLocationModalOpen ? "rounded-t-xl" : "rounded-none"
+        }`}
+      >
         <div
-          key={location.id}
-          onClick={() => {
-            setLocationModal(true);
-            setIsLocationModalOpen(false);
-          }}
-          className="location flex items-center justify-start w-full border-2
-          border-zinc-50 px-2 py-3 rounded-lg active:border-black cursor-pointer"
+          ref={locationModalCloseRef}
+          className="absolute right-6 top-6 opacity-0 cursor-pointer"
         >
-          <div className="locationLogo flex items-center justify-center w-10 h-10 bg-[#eee] rounded-full mr-3">
-            <FaLocationDot className="w-4 h-4" />
-          </div>
-          <div className="font-medium text-base w-[80%]">
-            {location.address}
-          </div>
+          <RiArrowDownWideLine
+            onClick={() => setLocationModalOpen(false)}
+            className="text-2xl font-bold"
+          />
         </div>
-      ))}
+        <h4 className="text-2xl font-semibold mb-3">Find a trip</h4>
+
+        {/* Form Section */}
+        <div className="for-line relative">
+          <div className="absolute line h-20 w-1 bg-gray-900 top-1/2 transform -translate-y-1/2 left-8 rounded-full"></div>
+          <form>
+            <div className="to mb-2">
+              <input
+                name="to"
+                placeholder="Add a pick up location"
+                type="text"
+                onClick={() => setLocationModalOpen(true)}
+                ref={inputRef}
+                className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"
+              />
+            </div>
+            <div className="to mb-3">
+              <input
+                name="destination"
+                placeholder="Enter your destination"
+                type="text"
+                onClick={() => setLocationModalOpen(true)}
+                ref={inputRef}
+                className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
