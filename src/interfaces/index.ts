@@ -4,6 +4,7 @@ import { AuthCaptainContextType } from "./AuthCaptainContextType";
 import { AuthCaptain } from "./AuthCaptain";
 import { APICaptainResponse } from "./APICaptainResponse";
 import { APIUserResponse } from "./APIUserResponse";
+import { RouteConfig } from "./RouteConfig";
 
 export type {
   AuthUser,
@@ -12,4 +13,5 @@ export type {
   AuthCaptain,
   APICaptainResponse,
   APIUserResponse,
+  RouteConfig,
 };

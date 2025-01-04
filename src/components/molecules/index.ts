@@ -3,6 +3,10 @@ import UserProtectWrapper from "./UserProtectWrapper";
 import CaptainProtectWrapper from "./CaptainProtectWrapper";
 import CaptainLogout from "./CaptainLogout";
 import ModuleWrapper from "./ModuleWrapper";
+import CaptainDetails from "./CaptainDetails";
+import RidePopupModal from "./RidePopupModal";
+import ConfirmRidePopupModal from "./ConfirmRidePopupModal";
+import CompleteRideModal from "./CompleteRideModal";
 
 export {
   UserLogout,
@@ -10,4 +14,8 @@ export {
   CaptainProtectWrapper,
   CaptainLogout,
   ModuleWrapper,
+  CaptainDetails,
+  RidePopupModal,
+  ConfirmRidePopupModal,
+  CompleteRideModal,
 };

@@ -6,6 +6,7 @@ import CaptainLogin from "./CaptainLogin";
 import UserHomePage from "./UserHomePage";
 import CaptainHomePage from "./CaptainHomePage";
 import RidingUser from "./RidingUser";
+import RidingCaptain from "./RidingCaptain";
 
 export {
   StartPage,
@@ -16,4 +17,5 @@ export {
   CaptainSignup,
   CaptainLogin,
   RidingUser,
+  RidingCaptain,
 };

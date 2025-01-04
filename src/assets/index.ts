@@ -5,6 +5,17 @@ import Loader from "./GIFs/loader.gif";
 import MapTemprary from "./GIFs/Map-Temporay.gif";
 import Car from "./PNGs/Car.webp";
 import Bike from "./PNGs/bike.webp";
-import Auto from "./PNGs/Auto.webp"
+import Auto from "./PNGs/Auto.webp";
+import captainImage from "./PNGs/captain.jpg";
 
-export { UberLogo, UberLogoImage, UberDriver, Loader, MapTemprary, Car, Bike, Auto };
+export {
+  UberLogo,
+  UberLogoImage,
+  UberDriver,
+  Loader,
+  MapTemprary,
+  Car,
+  Bike,
+  Auto,
+  captainImage,
+};
