@@ -11,11 +11,11 @@ import { useGSAPAnimationFn } from "../utils";
 
 const CaptainHomePage = () => {
   // ( RidePopupModal: UseRef's and State Variables)
-  const [ridePopupModal, setRidePopupModal] = useState(false);
+  const [ridePopupModal, setRidePopupModal] = useState(true);
   const ridePopupModalRef = useRef<HTMLDivElement | null>(null);
-  
+
   // ( ConfirmRidePopupModal: UseRef's and State Variables)
-  const [confirmRidePopupModal, setConfirmRidePopupModal] =useState(false);
+  const [confirmRidePopupModal, setConfirmRidePopupModal] = useState(false);
   const confirmRidePopupModalRef = useRef<HTMLDivElement | null>(null);
 
   useGSAPAnimationFn({
@@ -59,14 +59,17 @@ const CaptainHomePage = () => {
 
         <div
           ref={ridePopupModalRef}
-          className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-0"
+          className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-full"
         >
-          <RidePopupModal setRidePopupModal={setRidePopupModal} />
+          <RidePopupModal
+            setRidePopupModal={setRidePopupModal}
+            setConfirmRidePopupModal={setConfirmRidePopupModal}
+          />
         </div>
 
         <div
-          ref={ridePopupModalRef}
-          className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-0"
+          ref={confirmRidePopupModalRef}
+          className="absolute bottom-0 p-3 w-full h-screen bg-white rounded-t-xl z-10 translate-y-full"
         >
           <ConfirmRidePopupModal
             setRidePopupModal={setRidePopupModal}

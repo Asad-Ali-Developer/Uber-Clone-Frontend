@@ -6,6 +6,7 @@ import ModuleWrapper from "./ModuleWrapper";
 import CaptainDetails from "./CaptainDetails";
 import RidePopupModal from "./RidePopupModal";
 import ConfirmRidePopupModal from "./ConfirmRidePopupModal";
+import CompleteRideModal from "./CompleteRideModal";
 
 export {
   UserLogout,
@@ -15,5 +16,6 @@ export {
   ModuleWrapper,
   CaptainDetails,
   RidePopupModal,
-  ConfirmRidePopupModal
+  ConfirmRidePopupModal,
+  CompleteRideModal,
 };
