@@ -10,6 +10,7 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../components/organisms";
+import { useGSAPAnimationFn } from "../utils";
 
 const UserHomePage = () => {
   // LocationSearchModal (Refs and State Variables)
@@ -61,53 +62,25 @@ const UserHomePage = () => {
     }
   }, [allLocationsModalOpen]);
 
-  useGSAP(() => {
-    if (allLocationsModalToOpenRideModal) {
-      gsap.to(ridesModalRef.current, {
-        y: 0,
-      });
-    } else {
-      gsap.to(ridesModalRef.current, {
-        y: "100%",
-      });
-    }
-  }, [allLocationsModalToOpenRideModal]);
+  useGSAPAnimationFn({
+    modalState: allLocationsModalToOpenRideModal,
+    modalRef: ridesModalRef,
+  });
 
-  useGSAP(() => {
-    if (confirmRideOpen) {
-      gsap.to(confirmRideModalRef.current, {
-        y: 0,
-      });
-    } else {
-      gsap.to(confirmRideModalRef.current, {
-        y: "100%",
-      });
-    }
-  }, [confirmRideOpen]);
+  useGSAPAnimationFn({
+    modalState: confirmRideOpen,
+    modalRef: confirmRideModalRef,
+  });
 
-  useGSAP(() => {
-    if (lookingForDriverModalOpen) {
-      gsap.to(lookingForDriverModalRef.current, {
-        y: 0,
-      });
-    } else {
-      gsap.to(lookingForDriverModalRef.current, {
-        y: "100%",
-      });
-    }
-  }, [lookingForDriverModalOpen]);
+  useGSAPAnimationFn({
+    modalState: lookingForDriverModalOpen,
+    modalRef: lookingForDriverModalRef,
+  });
 
-  useGSAP(() => {
-    if (waitingForDriverModalOpen) {
-      gsap.to(waitingForDriverModalRef.current, {
-        y: 0,
-      });
-    } else {
-      gsap.to(waitingForDriverModalRef.current, {
-        y: "100%",
-      });
-    }
-  }, [waitingForDriverModalOpen]);
+  useGSAPAnimationFn({
+    modalState: waitingForDriverModalOpen,
+    modalRef: waitingForDriverModalRef,
+  });
 
   return (
     <div className="h-full overflow-hidden relative">

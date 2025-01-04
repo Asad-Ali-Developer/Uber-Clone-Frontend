@@ -82,7 +82,7 @@ const CaptainLogin = () => {
         textColor="white"
         link="/user/login"
         text="Sign in as User"
-        tailwaindBgColor="bg-green-500"
+        bgColor="#D57100"
       />
     </div>
   );

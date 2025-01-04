@@ -25,7 +25,6 @@ const CaptainSignup = () => {
   const onSubmitForm = async (data: captainFormDataSignup) => {
     await signup(data);
 
-
     console.log(data);
 
     setTimeout(() => {
@@ -146,9 +145,11 @@ const CaptainSignup = () => {
               <h3 className="text-base font-medium mb-2">Vehicle type:</h3>
               <select
                 {...register("vehicle.vehicleType")}
-                className="w-full p-3 bg-[#eeeeee] text-[#9CA3BD] rounded-md placeholder:text-sm"
+                className="w-full p-3 bg-[#eeeeee] rounded-md placeholder:text-sm"
               >
-                <option value="">Vehicle Type</option>
+                <option value="" className="text-[#9CA3BD]">
+                  Vehicle Type
+                </option>
                 <option value={VehicleTypeEnum.car} className="text-black">
                   Car
                 </option>
@@ -183,7 +184,7 @@ const CaptainSignup = () => {
         </form>
 
         {/* Login Link */}
-        <p className="text-center text-sm">
+        <p className="text-center text-sm mt-4">
           Already have an account?{" "}
           <Link to="/captain/login" className="text-blue-500 font-medium">
             Login here

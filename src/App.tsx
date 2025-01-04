@@ -3,6 +3,7 @@ import {
   CaptainHomePage,
   CaptainLogin,
   CaptainSignup,
+  RidingUser,
   StartPage,
   UserHomePage,
   UserLogin,
@@ -28,6 +29,14 @@ const App = () => {
         element={
           <UserProtectWrapper>
             <UserHomePage />
+          </UserProtectWrapper>
+        }
+      />
+      <Route
+        path="/user/riding"
+        element={
+          <UserProtectWrapper>
+            <RidingUser />
           </UserProtectWrapper>
         }
       />
