@@ -1,7 +1,7 @@
-interface LocationSuggestion {
+export interface LocationSuggestion {
     label: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
 }
 
 export interface LocationSuggestionResponse {
