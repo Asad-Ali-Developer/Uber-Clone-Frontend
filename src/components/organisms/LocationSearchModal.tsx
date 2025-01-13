@@ -1,4 +1,10 @@
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useState,
+} from "react";
 import { RiArrowDownWideLine } from "react-icons/ri";
 
 interface Props {
@@ -6,14 +12,37 @@ interface Props {
   allLocationModalOpen: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   locationModalCloseRef: MutableRefObject<HTMLDivElement | null>;
+  setOriginDestinationData: Dispatch<SetStateAction<{ origin: string; destination: string }>>;
 }
 
 const LocationSearchModal = ({
   inputRef,
   allLocationModalOpen,
   setLocationModalOpen,
-  locationModalCloseRef
+  locationModalCloseRef,
+  setOriginDestinationData,
 }: Props) => {
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === "origin") {
+      setOrigin(value);
+      setOriginDestinationData((prevData) => ({
+        ...prevData,
+        origin: value,
+      }));
+    } else if (name === "destination") {
+      setDestination(value);
+      setOriginDestinationData((prevData) => ({
+        ...prevData,
+        destination: value,
+      }));
+    }
+  };
+
   return (
     <div className="bg-white">
       <div
@@ -38,9 +67,11 @@ const LocationSearchModal = ({
           <form>
             <div className="to mb-2">
               <input
-                name="to"
+                name="origin"
                 placeholder="Add a pick up location"
                 type="text"
+                value={origin}
+                onChange={handleInput}
                 onClick={() => setLocationModalOpen(true)}
                 ref={inputRef}
                 className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"
@@ -51,6 +82,8 @@ const LocationSearchModal = ({
                 name="destination"
                 placeholder="Enter your destination"
                 type="text"
+                value={destination}
+                onChange={handleInput}
                 onClick={() => setLocationModalOpen(true)}
                 ref={inputRef}
                 className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"

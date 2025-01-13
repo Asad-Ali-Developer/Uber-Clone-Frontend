@@ -1,18 +1,58 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import debounce from "lodash.debounce";
+import { useEffect, useRef, useState } from "react";
 import { MapTemprary, UberLogo } from "../assets";
 import {
-  LocationSearchModal,
   AllLocationsModal,
   AllRidesModal,
   ConfirmRideModal,
+  LocationSearchModal,
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../components/organisms";
+import { useGetLocationSuggestions } from "../hooks";
 import { useGSAPAnimationFn } from "../utils";
 
 const UserHomePage = () => {
+  const { getSuggestions } = useGetLocationSuggestions();
+
+  const [originDestinationData, setOriginDestinationData] = useState({
+    origin: "",
+    destination: "",
+  });
+
+
+  useEffect(() => {
+    console.log(originDestinationData);
+  }, [originDestinationData]);
+
+  // Function to fetch origin suggestions (debounced)
+  const fetchOriginSuggestions = debounce(async () => {
+    if (originDestinationData.origin.trim()) {
+      const suggestions = await getSuggestions(originDestinationData.origin);
+      console.log(suggestions);
+    } else {
+      // setOriginSuggestions([]);
+      console.log("Error is coming yar!");
+    }
+  }, 300); // Adjust debounce time as needed
+
+  // Trigger fetchOriginSuggestions whenever `origin` changes
+  useEffect(() => {
+    fetchOriginSuggestions();
+
+    // Clean up the debounced function
+    return () => fetchOriginSuggestions.cancel();
+  }, [originDestinationData.origin]);
+
+  // console.log(originDestinationData);
+
+
+
+
+
+
   // LocationSearchModal (Refs and State Variables)
   // Input Ref to Open the AllLocationsModal when clicking on the input field.
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -101,6 +141,7 @@ const UserHomePage = () => {
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end">
           <LocationSearchModal
             inputRef={inputRef}
+            setOriginDestinationData={setOriginDestinationData}
             locationModalCloseRef={locationModalCloseRef}
             allLocationModalOpen={allLocationsModalOpen}
             setLocationModalOpen={setAllLocationsModalOpen}

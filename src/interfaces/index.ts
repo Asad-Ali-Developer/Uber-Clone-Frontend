@@ -5,6 +5,7 @@ import { AuthCaptain } from "./AuthCaptain";
 import { APICaptainResponse } from "./APICaptainResponse";
 import { APIUserResponse } from "./APIUserResponse";
 import { RouteConfig } from "./RouteConfig";
+import { LocationSuggestionResponse } from "./LocationSuggestionResponse";
 
 export type {
   AuthUser,
@@ -14,4 +15,5 @@ export type {
   APICaptainResponse,
   APIUserResponse,
   RouteConfig,
+  LocationSuggestionResponse,
 };
