@@ -6,7 +6,9 @@ import { LocationSuggestionResponse } from "../interfaces";
 const useGetLocationSuggestions = () => {
   const [loading, setLoading] = useState(false);
 
-  const getSuggestions = async (location: string) => {
+  const getSuggestions = async (
+    location: string
+  ): Promise<LocationSuggestionResponse | null> => {
     try {
       setLoading(true);
 
@@ -23,10 +25,17 @@ const useGetLocationSuggestions = () => {
         }
       );
 
-      return response.data || []; // Ensure suggestions exist
+      // Ensure the response data is valid and contains suggestions
+      if (response.data && response.data.suggestions.length > 0) {
+        // Access the first suggestion's label
+        const firstSuggestionLabel = response.data.suggestions[0].label;
+        console.log(firstSuggestionLabel); // Log the first suggestion label
+      }
+
+      return response.data || null; // Ensure suggestions exist
     } catch (error) {
       console.error("Error fetching origin suggestions:", error);
-      return []; // Return empty array on error
+      return null;
     } finally {
       setLoading(false);
     }

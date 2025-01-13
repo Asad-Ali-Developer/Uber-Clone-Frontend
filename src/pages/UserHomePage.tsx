@@ -13,45 +13,70 @@ import {
 } from "../components/organisms";
 import { useGetLocationSuggestions } from "../hooks";
 import { useGSAPAnimationFn } from "../utils";
+import { LocationSuggestion } from "../interfaces";
 
 const UserHomePage = () => {
-  const { getSuggestions } = useGetLocationSuggestions();
+  const { getSuggestions, loading } = useGetLocationSuggestions();
 
   const [originDestinationData, setOriginDestinationData] = useState({
     origin: "",
     destination: "",
   });
 
+  // console.log(originDestinationData)
 
-  useEffect(() => {
-    console.log(originDestinationData);
-  }, [originDestinationData]);
+  const [originSuggestions, setOriginSuggestions] = useState<
+    LocationSuggestion[]
+  >([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState<
+    LocationSuggestion[]
+  >([]);
+
+  const [isOriginSearchActive, setIsOriginSearchActive] = useState(true); // Track active search
 
   // Function to fetch origin suggestions (debounced)
   const fetchOriginSuggestions = debounce(async () => {
     if (originDestinationData.origin.trim()) {
-      const suggestions = await getSuggestions(originDestinationData.origin);
-      console.log(suggestions);
-    } else {
-      // setOriginSuggestions([]);
-      console.log("Error is coming yar!");
-    }
-  }, 300); // Adjust debounce time as needed
+      const response = await getSuggestions(originDestinationData.origin);
+      if (response?.suggestions && response.suggestions.length > 0) {
+        setOriginSuggestions(response.suggestions);
+        setIsOriginSearchActive(true);
+      } else {
+        console.log("No suggestions found");
+      }
+    } 
+  }, 500); // Adjust debounce time as needed
 
-  // Trigger fetchOriginSuggestions whenever `origin` changes
+  const fetchDestinationSuggestions = debounce(async () => {
+    if (originDestinationData.destination.trim()) {
+      const response = await getSuggestions(originDestinationData.destination);
+
+      if (response?.suggestions && response.suggestions.length > 0) {
+        setDestinationSuggestions(response.suggestions);
+        setIsOriginSearchActive(false);
+      } else {
+        console.log("No suggestions found");
+      }
+    } 
+  }, 500); 
+
   useEffect(() => {
     fetchOriginSuggestions();
 
     // Clean up the debounced function
-    return () => fetchOriginSuggestions.cancel();
+    return () => {
+      fetchOriginSuggestions.cancel();
+    };
   }, [originDestinationData.origin]);
 
-  // console.log(originDestinationData);
+  useEffect(() => {
+    fetchDestinationSuggestions();
 
-
-
-
-
+    // Clean up the debounced function
+    return () => {
+      fetchDestinationSuggestions.cancel();
+    };
+  }, [originDestinationData.destination]);
 
   // LocationSearchModal (Refs and State Variables)
   // Input Ref to Open the AllLocationsModal when clicking on the input field.
@@ -85,7 +110,7 @@ const UserHomePage = () => {
   useGSAP(() => {
     if (allLocationsModalOpen) {
       gsap.to(allLocationModalRef.current, {
-        height: "70%",
+        height: "62.5%",
         paddingTop: 20,
       });
       gsap.to(locationModalCloseRef.current, {
@@ -139,8 +164,10 @@ const UserHomePage = () => {
         />
 
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end">
+          
           <LocationSearchModal
             inputRef={inputRef}
+            originDestinationData={originDestinationData}
             setOriginDestinationData={setOriginDestinationData}
             locationModalCloseRef={locationModalCloseRef}
             allLocationModalOpen={allLocationsModalOpen}
@@ -153,6 +180,11 @@ const UserHomePage = () => {
               setAllLocationsModalToOpenRideModal={
                 setAllLocationsModalToOpenRideModal
               }
+              originSuggestions={originSuggestions}
+              destinationSuggestions={destinationSuggestions}
+              isOriginSearchActive={isOriginSearchActive}
+              setOriginDestinationData={setOriginDestinationData}
+              loading={loading}
             />
           </div>
 

@@ -3,6 +3,7 @@ import {
   Dispatch,
   MutableRefObject,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 import { RiArrowDownWideLine } from "react-icons/ri";
@@ -12,11 +13,15 @@ interface Props {
   allLocationModalOpen: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   locationModalCloseRef: MutableRefObject<HTMLDivElement | null>;
-  setOriginDestinationData: Dispatch<SetStateAction<{ origin: string; destination: string }>>;
+  setOriginDestinationData: Dispatch<
+    SetStateAction<{ origin: string; destination: string }>
+  >;
+  originDestinationData: { origin: string; destination: string };
 }
 
 const LocationSearchModal = ({
   inputRef,
+  originDestinationData,
   allLocationModalOpen,
   setLocationModalOpen,
   locationModalCloseRef,
@@ -25,23 +30,41 @@ const LocationSearchModal = ({
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
 
+
+  useEffect(() => {
+    setOrigin(originDestinationData.origin);
+    setDestination(originDestinationData.destination);
+  }, [originDestinationData]);
+
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "origin") {
       setOrigin(value);
+      // setOrigin(originDestinationData.origin)
       setOriginDestinationData((prevData) => ({
         ...prevData,
         origin: value,
       }));
     } else if (name === "destination") {
       setDestination(value);
+      // setDestination(originDestinationData.destination)
       setOriginDestinationData((prevData) => ({
         ...prevData,
         destination: value,
       }));
     }
   };
+
+  const handleFindTrip = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // console.log({
+    //   origin,
+    //   destination
+    // }); // Response is coming good
+    
+  }
 
   return (
     <div className="bg-white">
@@ -62,9 +85,9 @@ const LocationSearchModal = ({
         <h4 className="text-2xl font-semibold mb-3">Find a trip</h4>
 
         {/* Form Section */}
-        <div className="for-line relative">
-          <div className="absolute line h-20 w-1 bg-gray-900 top-1/2 transform -translate-y-1/2 left-8 rounded-full"></div>
-          <form>
+        <form onSubmit={handleFindTrip}>
+          <div className="for-line relative">
+            <div className="absolute line h-20 w-1 bg-gray-900 top-1/2 transform -translate-y-1/2 left-8 rounded-full"></div>
             <div className="to mb-2">
               <input
                 name="origin"
@@ -74,7 +97,7 @@ const LocationSearchModal = ({
                 onChange={handleInput}
                 onClick={() => setLocationModalOpen(true)}
                 ref={inputRef}
-                className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"
+                className="bg-[#eeeeee] px-16 py-3 font-medium rounded-lg w-full mb-1"
               />
             </div>
             <div className="to mb-3">
@@ -86,11 +109,17 @@ const LocationSearchModal = ({
                 onChange={handleInput}
                 onClick={() => setLocationModalOpen(true)}
                 ref={inputRef}
-                className="bg-[#eeeeee] px-16 py-3 rounded-lg w-full mb-1"
+                className="bg-[#eeeeee] px-16 py-3 font-medium rounded-lg w-full mb-1"
               />
             </div>
-          </form>
-        </div>
+          </div>
+
+          {allLocationModalOpen && (
+            <button className="bg-black text-white px-6 py-3 rounded-lg w-full -mt-1 font-medium">
+              Find trip
+            </button>
+          )}
+        </form>
       </div>
     </div>
   );
