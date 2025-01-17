@@ -43,7 +43,7 @@ const AuthCaptainContextProvider = ({ children }: Props) => {
 
       setAuthenticatedCaptain(response.data.captain);
     } catch (error) {
-      console.log("No token or user found");
+      // console.log("No token or user found");
       setAuthenticatedCaptain(null);
     }
   };

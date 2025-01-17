@@ -11,17 +11,26 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../components/organisms";
-import { useGetLocationSuggestions } from "../hooks";
+import { useGetFare, useGetLocationSuggestions } from "../hooks";
 import { useGSAPAnimationFn } from "../utils";
 import { LocationSuggestion } from "../interfaces";
 
 const UserHomePage = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
+  const { getFare, fareLoading } = useGetFare();
 
-  const [originDestinationData, setOriginDestinationData] = useState({
-    origin: "",
-    destination: "",
-  });
+  console.log(fareLoading);
+
+  type OriginDestinationData = {
+    origin: string;
+    destination: string;
+  };
+
+  const [originDestinationData, setOriginDestinationData] =
+    useState<OriginDestinationData>({
+      origin: "",
+      destination: "",
+    });
 
   // console.log(originDestinationData)
 
@@ -44,7 +53,7 @@ const UserHomePage = () => {
       } else {
         console.log("No suggestions found");
       }
-    } 
+    }
   }, 500); // Adjust debounce time as needed
 
   const fetchDestinationSuggestions = debounce(async () => {
@@ -57,8 +66,8 @@ const UserHomePage = () => {
       } else {
         console.log("No suggestions found");
       }
-    } 
-  }, 500); 
+    }
+  }, 500);
 
   useEffect(() => {
     fetchOriginSuggestions();
@@ -77,6 +86,24 @@ const UserHomePage = () => {
       fetchDestinationSuggestions.cancel();
     };
   }, [originDestinationData.destination]);
+
+  const handleGetFare = async () => {
+    try {
+      const fare = await getFare(
+        originDestinationData.origin,
+        originDestinationData.destination
+      );
+      console.log(fare);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (originDestinationData.origin && originDestinationData.destination) {
+      handleGetFare();
+    }
+  }, [originDestinationData.origin, originDestinationData.destination]);
 
   // LocationSearchModal (Refs and State Variables)
   // Input Ref to Open the AllLocationsModal when clicking on the input field.
@@ -164,7 +191,6 @@ const UserHomePage = () => {
         />
 
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end">
-          
           <LocationSearchModal
             inputRef={inputRef}
             originDestinationData={originDestinationData}

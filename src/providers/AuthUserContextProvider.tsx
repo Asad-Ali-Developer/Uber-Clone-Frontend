@@ -44,7 +44,8 @@ const AuthUserContextProvider = ({ children }: Props) => {
       // console.log(authenticatedUser?.createdAt.split("T")[1].split(".")[0]);
       // console.log(authenticatedUser?.createdAt);
     } catch (error) {
-      console.log("No token or user found");
+      // console.log("No token or user found");
+      setAuthenticatedUser(null);
     }
   };
 
