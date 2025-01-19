@@ -1,14 +1,14 @@
 import { AuthUser } from "./AuthUser";
 
 export interface APIUserResponse {
-  status: number;
+  config?: any;
   data: {
     user: AuthUser;
     token?: string | null;
     message?: string;
   };
-  config: any;
-  headers: any;
-  request: any;
-  statusText: string;
+  status: number;
+  headers?: any;
+  request?: any;
+  statusText?: string;
 }

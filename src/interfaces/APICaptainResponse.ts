@@ -7,8 +7,8 @@ export interface APICaptainResponse {
     token?: string | null;
     message?: string;
   };
-  config: any;
-  headers: any;
-  request: any;
-  statusText: string;
+  config?: any;
+  headers?: any;
+  request?: any;
+  statusText?: string;
 }

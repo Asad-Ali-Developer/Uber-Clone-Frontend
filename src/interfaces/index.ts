@@ -1,21 +1,33 @@
-import { AuthUser } from "./AuthUser";
-import { AuthUserContextType } from "./AuthUserContextType";
-import { AuthCaptainContextType } from "./AuthCaptainContextType";
-import { AuthCaptain } from "./AuthCaptain";
 import { APICaptainResponse } from "./APICaptainResponse";
 import { APIUserResponse } from "./APIUserResponse";
+import { AuthCaptain } from "./AuthCaptain";
+import { AuthCaptainContextType } from "./AuthCaptainContextType";
+import { AuthUser } from "./AuthUser";
+import { AuthUserContextType } from "./AuthUserContextType";
+import {
+  LocationSuggestion,
+  LocationSuggestionResponse,
+} from "./LocationSuggestionResponse";
 import { RouteConfig } from "./RouteConfig";
-import { LocationSuggestionResponse } from "./LocationSuggestionResponse";
-import { LocationSuggestion } from "./LocationSuggestionResponse";
+import { fareDataResponse, fareResponse, GetFareResponse } from "./getFareResponse";
+import { CreateRideResponse } from "./CreateRideResponse";
+import { RideStatusEnum } from "./CreateRideResponse";
 
 export type {
-  AuthUser,
-  AuthUserContextType,
-  AuthCaptainContextType,
-  AuthCaptain,
   APICaptainResponse,
   APIUserResponse,
-  RouteConfig,
+  AuthCaptain,
+  AuthCaptainContextType,
+  AuthUser,
+  AuthUserContextType,
+  LocationSuggestion,
   LocationSuggestionResponse,
-  LocationSuggestion
+  fareDataResponse,
+  RouteConfig,
+  GetFareResponse,
+  fareResponse,
+  CreateRideResponse,
+  RideStatusEnum,
 };
+
+

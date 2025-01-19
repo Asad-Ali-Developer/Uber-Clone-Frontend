@@ -4,8 +4,6 @@ import { LocationSuggestion } from "../../interfaces";
 import { Loader } from "../../assets";
 
 interface Props {
-  setAllLocationsModalToOpenRideModal: Dispatch<SetStateAction<boolean>>;
-  setAllLocationModalOpen: Dispatch<SetStateAction<boolean>>;
   originSuggestions: LocationSuggestion[];
   destinationSuggestions: LocationSuggestion[];
   isOriginSearchActive: boolean;
@@ -16,8 +14,6 @@ interface Props {
 }
 
 const AllLocationsModal = ({
-  setAllLocationsModalToOpenRideModal,
-  setAllLocationModalOpen,
   loading,
   originSuggestions,
   destinationSuggestions,
@@ -49,12 +45,6 @@ const AllLocationsModal = ({
           <div
             key={index}
             onClick={() => {
-              // To Close the AllLocationsModal
-              // setAllLocationModalOpen(false);
-
-              // To Open the AllRidesModal
-              // setAllLocationsModalToOpenRideModal(true);
-
               handleSuggestionLabelClick(location.label);
             }}
             className="location flex items-center justify-start w-full border-2

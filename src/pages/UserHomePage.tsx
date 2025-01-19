@@ -11,15 +11,14 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../components/organisms";
-import { useGetFare, useGetLocationSuggestions } from "../hooks";
+import { useCreateRide, useGetFare, useGetLocationSuggestions } from "../hooks";
+import { fareDataResponse, LocationSuggestion } from "../interfaces";
 import { useGSAPAnimationFn } from "../utils";
-import { LocationSuggestion } from "../interfaces";
 
 const UserHomePage = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
-
-  console.log(fareLoading);
+  const { createRide, rideCreationLoading } = useCreateRide();
 
   type OriginDestinationData = {
     origin: string;
@@ -32,11 +31,14 @@ const UserHomePage = () => {
       destination: "",
     });
 
-  // console.log(originDestinationData)
+  const [faresData, setFaresData] = useState<fareDataResponse | null>(null);
+
+  const [vehicleType, setVehiclType] = useState("");
 
   const [originSuggestions, setOriginSuggestions] = useState<
     LocationSuggestion[]
   >([]);
+
   const [destinationSuggestions, setDestinationSuggestions] = useState<
     LocationSuggestion[]
   >([]);
@@ -47,8 +49,8 @@ const UserHomePage = () => {
   const fetchOriginSuggestions = debounce(async () => {
     if (originDestinationData.origin.trim()) {
       const response = await getSuggestions(originDestinationData.origin);
-      if (response?.suggestions && response.suggestions.length > 0) {
-        setOriginSuggestions(response.suggestions);
+      if (response?.data.suggestions && response.data.suggestions.length > 0) {
+        setOriginSuggestions(response.data.suggestions);
         setIsOriginSearchActive(true);
       } else {
         console.log("No suggestions found");
@@ -60,8 +62,8 @@ const UserHomePage = () => {
     if (originDestinationData.destination.trim()) {
       const response = await getSuggestions(originDestinationData.destination);
 
-      if (response?.suggestions && response.suggestions.length > 0) {
-        setDestinationSuggestions(response.suggestions);
+      if (response?.data.suggestions && response.data.suggestions.length > 0) {
+        setDestinationSuggestions(response.data.suggestions);
         setIsOriginSearchActive(false);
       } else {
         console.log("No suggestions found");
@@ -89,21 +91,32 @@ const UserHomePage = () => {
 
   const handleGetFare = async () => {
     try {
-      const fare = await getFare(
+      const response = await getFare(
         originDestinationData.origin,
         originDestinationData.destination
       );
-      console.log(fare);
+
+      if (response?.data) {
+        setFaresData(response.data); // Only set if response.data is defined
+        console.log(response.data);
+      } else {
+        setFaresData(null); // Or handle the case where response.data is undefined
+      }
     } catch (error) {
       console.log(error);
+      setFaresData(null); // Optional: Reset to null in case of an error
     }
   };
 
-  useEffect(() => {
-    if (originDestinationData.origin && originDestinationData.destination) {
-      handleGetFare();
-    }
-  }, [originDestinationData.origin, originDestinationData.destination]);
+  const handleCreateRide = async () => {
+    const response = await createRide(
+      vehicleType,
+      originDestinationData.origin,
+      originDestinationData.destination
+    );
+
+    return response;
+  };
 
   // LocationSearchModal (Refs and State Variables)
   // Input Ref to Open the AllLocationsModal when clicking on the input field.
@@ -198,14 +211,16 @@ const UserHomePage = () => {
             locationModalCloseRef={locationModalCloseRef}
             allLocationModalOpen={allLocationsModalOpen}
             setLocationModalOpen={setAllLocationsModalOpen}
+            handleGetFare={handleGetFare}
+            fareLoading={fareLoading}
+            setAllLocationModalOpen={setAllLocationsModalOpen}
+            setAllLocationsModalToOpenRideModal={
+              setAllLocationsModalToOpenRideModal
+            }
           />
 
           <div className="h-0 bg-white" ref={allLocationModalRef}>
             <AllLocationsModal
-              setAllLocationModalOpen={setAllLocationsModalOpen}
-              setAllLocationsModalToOpenRideModal={
-                setAllLocationsModalToOpenRideModal
-              }
               originSuggestions={originSuggestions}
               destinationSuggestions={destinationSuggestions}
               isOriginSearchActive={isOriginSearchActive}
@@ -221,6 +236,8 @@ const UserHomePage = () => {
             <AllRidesModal
               setLocationModal={setAllLocationsModalToOpenRideModal}
               setConfirmRideOpen={setConfirmRideOpen}
+              faresData={faresData}
+              setVehiclType={setVehiclType}
             />
           </div>
 
@@ -231,6 +248,11 @@ const UserHomePage = () => {
             <ConfirmRideModal
               setConfirmRideOpen={setConfirmRideOpen}
               setLookingForDriverModalOpen={setLookingForDriverModalOpen}
+              handleCreateRide={handleCreateRide}
+              originDestinationData={originDestinationData}
+              faresData={faresData}
+              vehicleType={vehicleType}
+              rideCreationLoading={rideCreationLoading}
             />
           </div>
 
