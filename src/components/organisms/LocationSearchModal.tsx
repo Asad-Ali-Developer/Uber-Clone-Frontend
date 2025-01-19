@@ -19,6 +19,8 @@ interface Props {
   originDestinationData: { origin: string; destination: string };
   handleGetFare: () => void;
   fareLoading: boolean;
+  setAllLocationModalOpen: Dispatch<SetStateAction<boolean>>;
+  setAllLocationsModalToOpenRideModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const LocationSearchModal = ({
@@ -30,6 +32,8 @@ const LocationSearchModal = ({
   setOriginDestinationData,
   handleGetFare,
   fareLoading,
+  setAllLocationModalOpen,
+  setAllLocationsModalToOpenRideModal,
 }: Props) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -62,6 +66,12 @@ const LocationSearchModal = ({
   const handleFindTrip = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleGetFare();
+    
+    // To Close the AllLocationsModal
+    setAllLocationModalOpen(false);
+
+    // To Open the AllRidesModal
+    setAllLocationsModalToOpenRideModal(true);
   };
 
   return (

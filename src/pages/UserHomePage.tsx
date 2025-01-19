@@ -11,13 +11,14 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../components/organisms";
-import { useGetFare, useGetLocationSuggestions } from "../hooks";
+import { useCreateRide, useGetFare, useGetLocationSuggestions } from "../hooks";
+import { fareDataResponse, LocationSuggestion } from "../interfaces";
 import { useGSAPAnimationFn } from "../utils";
-import { LocationSuggestion } from "../interfaces";
 
 const UserHomePage = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
+  const { createRide, rideCreationLoading } = useCreateRide();
 
   type OriginDestinationData = {
     origin: string;
@@ -30,11 +31,10 @@ const UserHomePage = () => {
       destination: "",
     });
 
-  // console.log(originDestinationData)
-
   const [originSuggestions, setOriginSuggestions] = useState<
     LocationSuggestion[]
   >([]);
+
   const [destinationSuggestions, setDestinationSuggestions] = useState<
     LocationSuggestion[]
   >([]);
@@ -85,16 +85,35 @@ const UserHomePage = () => {
     };
   }, [originDestinationData.destination]);
 
+  const [faresData, setFaresData] = useState<fareDataResponse | null>(null);
+
   const handleGetFare = async () => {
     try {
-      const fare = await getFare(
+      const response = await getFare(
         originDestinationData.origin,
         originDestinationData.destination
       );
-      console.log(fare);
+
+      if (response?.data) {
+        setFaresData(response.data); // Only set if response.data is defined
+        console.log(response.data);
+      } else {
+        setFaresData(null); // Or handle the case where response.data is undefined
+      }
     } catch (error) {
       console.log(error);
+      setFaresData(null); // Optional: Reset to null in case of an error
     }
+  };
+
+  const handleCreateRide = async (vehicleType: string) => {
+    const response = await createRide(
+      vehicleType,
+      originDestinationData.origin,
+      originDestinationData.destination
+    );
+
+    console.log(response);
   };
 
   // LocationSearchModal (Refs and State Variables)
@@ -192,14 +211,14 @@ const UserHomePage = () => {
             setLocationModalOpen={setAllLocationsModalOpen}
             handleGetFare={handleGetFare}
             fareLoading={fareLoading}
+            setAllLocationModalOpen={setAllLocationsModalOpen}
+            setAllLocationsModalToOpenRideModal={
+              setAllLocationsModalToOpenRideModal
+            }
           />
 
           <div className="h-0 bg-white" ref={allLocationModalRef}>
             <AllLocationsModal
-              setAllLocationModalOpen={setAllLocationsModalOpen}
-              setAllLocationsModalToOpenRideModal={
-                setAllLocationsModalToOpenRideModal
-              }
               originSuggestions={originSuggestions}
               destinationSuggestions={destinationSuggestions}
               isOriginSearchActive={isOriginSearchActive}
@@ -215,6 +234,8 @@ const UserHomePage = () => {
             <AllRidesModal
               setLocationModal={setAllLocationsModalToOpenRideModal}
               setConfirmRideOpen={setConfirmRideOpen}
+              faresData={faresData}
+              handleCreateRide={handleCreateRide}
             />
           </div>
 

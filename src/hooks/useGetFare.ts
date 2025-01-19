@@ -10,9 +10,9 @@ const useGetFare = () => {
     origin: string,
     destination: string
   ): Promise<GetFareResponse | null> => {
-    const token = localStorage.getItem("serverTokenUser");
+    const userToken = localStorage.getItem("serverTokenUser");
 
-    if (!token) {
+    if (!userToken) {
       console.log("Token Not Found!");
       return null;
     }
@@ -26,7 +26,7 @@ const useGetFare = () => {
           params: { origin, destination },
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${userToken}`,
           },
         }
       );
