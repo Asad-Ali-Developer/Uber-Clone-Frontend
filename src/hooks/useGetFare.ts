@@ -1,46 +1,41 @@
 import axios from "axios";
 import { baseURL } from "./constant";
 import { useState } from "react";
-
-interface FareResponse {
-  fare: number;
-  distance: number;
-  duration: number;
-}
+import { GetFareResponse } from "../interfaces";
 
 const useGetFare = () => {
   const [fareLoading, setFareLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const getFare = async (
     origin: string,
     destination: string
-  ): Promise<FareResponse | null> => {
+  ): Promise<GetFareResponse | null> => {
     const token = localStorage.getItem("serverTokenUser");
-    console.log(token)
 
     if (!token) {
-      setError("User is not authenticated.");
+      console.log("Token Not Found!");
       return null;
     }
 
     try {
       setFareLoading(true);
-      setError(null);
 
-      const response = await axios.get<FareResponse>(`${baseURL}/get-fare`, {
-        params: { origin, destination },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response: GetFareResponse = await axios.get(
+        `${baseURL}/rides/get-fare`,
+        {
+          params: { origin, destination },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      return response.data || null;
+      // console.log(response.data.fare);
+      // console.log(response.status);
+
+      return response;
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || "Error fetching fare.";
-      setError(errorMessage);
       console.error("Error fetching fare:", error);
       return null;
     } finally {
@@ -48,7 +43,7 @@ const useGetFare = () => {
     }
   };
 
-  return { getFare, fareLoading, error };
+  return { getFare, fareLoading };
 };
 
 export default useGetFare;

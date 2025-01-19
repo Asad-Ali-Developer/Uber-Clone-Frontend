@@ -19,8 +19,6 @@ const UserHomePage = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
 
-  console.log(fareLoading);
-
   type OriginDestinationData = {
     origin: string;
     destination: string;
@@ -47,8 +45,8 @@ const UserHomePage = () => {
   const fetchOriginSuggestions = debounce(async () => {
     if (originDestinationData.origin.trim()) {
       const response = await getSuggestions(originDestinationData.origin);
-      if (response?.suggestions && response.suggestions.length > 0) {
-        setOriginSuggestions(response.suggestions);
+      if (response?.data.suggestions && response.data.suggestions.length > 0) {
+        setOriginSuggestions(response.data.suggestions);
         setIsOriginSearchActive(true);
       } else {
         console.log("No suggestions found");
@@ -60,8 +58,8 @@ const UserHomePage = () => {
     if (originDestinationData.destination.trim()) {
       const response = await getSuggestions(originDestinationData.destination);
 
-      if (response?.suggestions && response.suggestions.length > 0) {
-        setDestinationSuggestions(response.suggestions);
+      if (response?.data.suggestions && response.data.suggestions.length > 0) {
+        setDestinationSuggestions(response.data.suggestions);
         setIsOriginSearchActive(false);
       } else {
         console.log("No suggestions found");
@@ -98,12 +96,6 @@ const UserHomePage = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    if (originDestinationData.origin && originDestinationData.destination) {
-      handleGetFare();
-    }
-  }, [originDestinationData.origin, originDestinationData.destination]);
 
   // LocationSearchModal (Refs and State Variables)
   // Input Ref to Open the AllLocationsModal when clicking on the input field.
@@ -198,6 +190,8 @@ const UserHomePage = () => {
             locationModalCloseRef={locationModalCloseRef}
             allLocationModalOpen={allLocationsModalOpen}
             setLocationModalOpen={setAllLocationsModalOpen}
+            handleGetFare={handleGetFare}
+            fareLoading={fareLoading}
           />
 
           <div className="h-0 bg-white" ref={allLocationModalRef}>

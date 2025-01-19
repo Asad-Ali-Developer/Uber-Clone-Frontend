@@ -17,6 +17,8 @@ interface Props {
     SetStateAction<{ origin: string; destination: string }>
   >;
   originDestinationData: { origin: string; destination: string };
+  handleGetFare: () => void;
+  fareLoading: boolean;
 }
 
 const LocationSearchModal = ({
@@ -26,10 +28,11 @@ const LocationSearchModal = ({
   setLocationModalOpen,
   locationModalCloseRef,
   setOriginDestinationData,
+  handleGetFare,
+  fareLoading,
 }: Props) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-
 
   useEffect(() => {
     setOrigin(originDestinationData.origin);
@@ -58,13 +61,8 @@ const LocationSearchModal = ({
 
   const handleFindTrip = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // console.log({
-    //   origin,
-    //   destination
-    // }); // Response is coming good
-    
-  }
+    handleGetFare();
+  };
 
   return (
     <div className="bg-white">
@@ -115,7 +113,12 @@ const LocationSearchModal = ({
           </div>
 
           {allLocationModalOpen && (
-            <button className="bg-black text-white px-6 py-3 rounded-lg w-full -mt-1 font-medium">
+            <button
+              disabled={fareLoading}
+              className={`${
+                fareLoading ? "bg-zinc-700" : "bg-black"
+              } text-white px-6 py-3 rounded-lg w-full -mt-1 font-medium`}
+            >
               Find trip
             </button>
           )}
