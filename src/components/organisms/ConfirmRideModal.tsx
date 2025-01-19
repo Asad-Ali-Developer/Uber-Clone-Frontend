@@ -3,19 +3,49 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
-import { Car } from "../../assets";
+import { Auto, Bike, Car } from "../../assets";
+import { fareDataResponse } from "../../interfaces";
+import { getFareByVehicleType } from "../../utils";
 
 interface Props {
-  // confirmRideModalRef: MutableRefObject<HTMLDivElement | null>;
   setConfirmRideOpen: Dispatch<SetStateAction<boolean>>;
   setLookingForDriverModalOpen: Dispatch<SetStateAction<boolean>>;
+  handleCreateRide: () => void;
+  originDestinationData: { origin: string; destination: string };
+  faresData: fareDataResponse | null;
+  vehicleType: string;
+  rideCreationLoading: boolean;
 }
 
 const ConfirmRideModal = ({
-  // confirmRideModalRef,
   setConfirmRideOpen,
   setLookingForDriverModalOpen,
+  handleCreateRide,
+  originDestinationData,
+  faresData,
+  vehicleType,
+  rideCreationLoading,
 }: Props) => {
+  const fare = getFareByVehicleType(vehicleType, faresData);
+
+  const originDestinationFare = [
+    {
+      icon: <FaLocationDot />,
+      title: "Origin:",
+      origin: originDestinationData.origin,
+    },
+    {
+      icon: <TbLocationFilled />,
+      title: "Destination:",
+      destination: originDestinationData.destination,
+    },
+    {
+      icon: <IoIosCash />,
+      title: "Fare:",
+      fare: fare,
+    },
+  ];
+
   return (
     <div>
       <div className="p-4">
@@ -28,47 +58,43 @@ const ConfirmRideModal = ({
         <h3 className="text-2xl font-semibold pt-2 mb-5">Confirm your Ride</h3>
 
         <div className="flex flex-col gap-2 items-center">
-          
           <div className="image-styling-1 w-52 h-16 bg-blue-50 rounded-3xl flex justify-center items-start my-3">
             <div className="image-styling-2 w-32 h-12 bg-blue-100 rounded-3xl flex justify-center items-center">
-              <img src={Car} alt="Ride" className="w-24 -mt-10" />
+              {/* <img src={Car} alt="Ride" className="w-24 -mt-10" /> */}
+            {vehicleType === "car" && <img src={Car} alt="Car" className="w-24 -mt-10" />}
+            {vehicleType === "bike" && <img src={Bike} alt="Bike" className="w-24 -mt-10" />}
+            {vehicleType === "auto" && <img src={Auto} alt="Auto" className="w-24 -mt-10" />}
             </div>
           </div>
 
           <div className="w-full flex flex-col">
-            <div className="flex items-center gap-5 p-3 border-b-2">
-              <FaLocationDot />
-              <div className="pickup">
-                <h4 className="text-lg font-semibold">562/11-A</h4>
-                <p className="text-sm -mt-1 text-zinc-600">
-                  Kaikondrahalli, Bengaluru, Karnataka
-                </p>
+            {originDestinationFare.map((icon, index) => (
+              <div
+                key={index}
+                className={`flex items-center gap-5 p-3 ${
+                  index !== originDestinationFare.length - 1 ? "border-b-2" : ""
+                }`}
+              >
+                {icon.icon}
+                <div>
+                  <h4 className="text-lg font-semibold">{icon.title}</h4>
+                  <p className="text-sm -mt-1 text-zinc-600">
+                    {icon.origin || icon.destination}
+                  </p>
+                  <p className="text-sm -mt-1 text-zinc-600 font-medium">
+                    Rs. 200
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-5 p-3 border-b-2">
-              <TbLocationFilled />
-              <div className="destination">
-                <h4 className="text-lg font-semibold">562/11-A</h4>
-                <p className="text-sm -mt-1 text-zinc-600">
-                  Kaikondrahalli, Bengaluru, Karnataka
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-5 p-3">
-              <IoIosCash />
-              <div className="cash">
-                <h4 className="text-lg font-semibold">562/11-A</h4>
-                <p className="text-sm -mt-1 text-zinc-600 font-medium">
-                  Rs. 200
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
           <button
             onClick={() => {
+              handleCreateRide();
               setLookingForDriverModalOpen(true);
               setConfirmRideOpen(false);
             }}
+            disabled={rideCreationLoading}
             className="bg-green-600 text-white w-full px-4 py-3 rounded-md font-medium mt-5"
           >
             Confirm

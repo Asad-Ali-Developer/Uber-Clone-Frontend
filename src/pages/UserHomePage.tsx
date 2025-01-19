@@ -31,6 +31,10 @@ const UserHomePage = () => {
       destination: "",
     });
 
+  const [faresData, setFaresData] = useState<fareDataResponse | null>(null);
+
+  const [vehicleType, setVehiclType] = useState("");
+
   const [originSuggestions, setOriginSuggestions] = useState<
     LocationSuggestion[]
   >([]);
@@ -85,8 +89,6 @@ const UserHomePage = () => {
     };
   }, [originDestinationData.destination]);
 
-  const [faresData, setFaresData] = useState<fareDataResponse | null>(null);
-
   const handleGetFare = async () => {
     try {
       const response = await getFare(
@@ -106,14 +108,14 @@ const UserHomePage = () => {
     }
   };
 
-  const handleCreateRide = async (vehicleType: string) => {
+  const handleCreateRide = async () => {
     const response = await createRide(
       vehicleType,
       originDestinationData.origin,
       originDestinationData.destination
     );
 
-    console.log(response);
+    return response;
   };
 
   // LocationSearchModal (Refs and State Variables)
@@ -235,7 +237,7 @@ const UserHomePage = () => {
               setLocationModal={setAllLocationsModalToOpenRideModal}
               setConfirmRideOpen={setConfirmRideOpen}
               faresData={faresData}
-              handleCreateRide={handleCreateRide}
+              setVehiclType={setVehiclType}
             />
           </div>
 
@@ -246,6 +248,11 @@ const UserHomePage = () => {
             <ConfirmRideModal
               setConfirmRideOpen={setConfirmRideOpen}
               setLookingForDriverModalOpen={setLookingForDriverModalOpen}
+              handleCreateRide={handleCreateRide}
+              originDestinationData={originDestinationData}
+              faresData={faresData}
+              vehicleType={vehicleType}
+              rideCreationLoading={rideCreationLoading}
             />
           </div>
 

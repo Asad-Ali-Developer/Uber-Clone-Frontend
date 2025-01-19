@@ -1,4 +1,4 @@
-interface fareResponse {
+export interface fareResponse {
   car: number;
   bike: number;
   auto: number;
@@ -9,6 +9,7 @@ export interface fareDataResponse {
   duration: number;
   fare: fareResponse;
   message: string;
+  formattedDuration: string;
 }
 
 export interface GetFareResponse {

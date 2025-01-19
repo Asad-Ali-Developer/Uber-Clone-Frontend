@@ -9,14 +9,14 @@ interface Props {
   setLocationModal: Dispatch<SetStateAction<boolean>>;
   setConfirmRideOpen: Dispatch<SetStateAction<boolean>>;
   faresData: fareDataResponse | null; // Adjusted type
-  handleCreateRide: (vehicleType: string) => void;
+  setVehiclType: Dispatch<SetStateAction<string>>
 }
 
 const AllRidesModal = ({
   setLocationModal,
   setConfirmRideOpen,
   faresData,
-  handleCreateRide,
+  setVehiclType,
 }: Props) => {
 
   return (
@@ -35,7 +35,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          handleCreateRide('car')
+          setVehiclType('car')
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
@@ -53,7 +53,7 @@ const AllRidesModal = ({
           </h4>
           <h5 className="flex gap-1 items-center">
             <MdAccessTime className="w-3 h-3" />
-            <span className="text-xs font-medium">2 mins away</span>
+            <span className="text-xs font-medium">{faresData?.formattedDuration} away</span>
           </h5>
           <p className="text-xs">Affordable, Compact ride.</p>
         </div>
@@ -67,7 +67,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          handleCreateRide('bike')
+          setVehiclType('bike')
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
@@ -99,7 +99,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          handleCreateRide('bike')
+          setVehiclType('bike')
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"

@@ -9,7 +9,7 @@ import {
   LocationSuggestionResponse,
 } from "./LocationSuggestionResponse";
 import { RouteConfig } from "./RouteConfig";
-import { fareDataResponse, GetFareResponse } from "./getFareResponse";
+import { fareDataResponse, fareResponse, GetFareResponse } from "./getFareResponse";
 import { CreateRideResponse } from "./CreateRideResponse";
 import { RideStatusEnum } from "./CreateRideResponse";
 
@@ -25,6 +25,7 @@ export type {
   fareDataResponse,
   RouteConfig,
   GetFareResponse,
+  fareResponse,
   CreateRideResponse,
   RideStatusEnum,
 };
