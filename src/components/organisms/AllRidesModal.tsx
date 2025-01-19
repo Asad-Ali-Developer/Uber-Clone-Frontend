@@ -2,14 +2,15 @@ import { Dispatch, SetStateAction } from "react";
 import { FaUser } from "react-icons/fa6";
 import { MdAccessTime } from "react-icons/md";
 import { RiArrowDownWideLine } from "react-icons/ri";
-import { Auto, Bike, Car } from "../../assets";
+import { Auto, Bike, Car, Loader } from "../../assets";
 import { fareDataResponse } from "../../interfaces";
 
 interface Props {
   setLocationModal: Dispatch<SetStateAction<boolean>>;
   setConfirmRideOpen: Dispatch<SetStateAction<boolean>>;
   faresData: fareDataResponse | null; // Adjusted type
-  setVehiclType: Dispatch<SetStateAction<string>>
+  setVehiclType: Dispatch<SetStateAction<string>>;
+  fareLoading: boolean;
 }
 
 const AllRidesModal = ({
@@ -17,8 +18,8 @@ const AllRidesModal = ({
   setConfirmRideOpen,
   faresData,
   setVehiclType,
+  fareLoading,
 }: Props) => {
-
   return (
     <div>
       <div
@@ -35,7 +36,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          setVehiclType('car')
+          setVehiclType("car");
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
@@ -53,12 +54,22 @@ const AllRidesModal = ({
           </h4>
           <h5 className="flex gap-1 items-center">
             <MdAccessTime className="w-3 h-3" />
-            <span className="text-xs font-medium">{faresData?.formattedDuration} away</span>
+            <span className="text-[11px] font-medium">
+              {fareLoading ? (
+                <img className="w-4 h-4" src={Loader} alt="Loading..." />
+              ) : (
+                `${faresData?.formattedDuration} away`
+              )}
+            </span>
           </h5>
           <p className="text-xs">Affordable, Compact ride.</p>
         </div>
         <div className="price text-lg text-right font-semibold text-gray-600 w-20">
-          Rs. {faresData?.fare.car}
+          {fareLoading ? (
+            <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
+          ) : (
+            `Rs. ${faresData?.fare.car}`
+          )}
         </div>
       </div>
 
@@ -67,7 +78,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          setVehiclType('bike')
+          setVehiclType("bike");
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
@@ -85,12 +96,22 @@ const AllRidesModal = ({
           </h4>
           <h5 className="flex gap-1 items-center">
             <MdAccessTime className="w-3 h-3" />
-            <span className="text-xs font-medium">3 mins away</span>
+            <span className="text-[11px] font-medium">
+              {fareLoading ? (
+                <img className="w-4 h-4" src={Loader} alt="Loading..." />
+              ) : (
+                `${faresData?.formattedDuration} away`
+              )}
+            </span>
           </h5>
           <p className="text-xs">Affordable, Bike ride.</p>
         </div>
         <div className="price text-lg text-right  font-semibold text-gray-600 w-20">
-          Rs. {faresData?.fare.bike}
+          {fareLoading ? (
+            <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
+          ) : (
+            `Rs. ${faresData?.fare.bike}`
+          )}
         </div>
       </div>
 
@@ -99,7 +120,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          setVehiclType('bike')
+          setVehiclType("bike");
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
@@ -117,12 +138,22 @@ const AllRidesModal = ({
           </h4>
           <h5 className="flex gap-1 items-center">
             <MdAccessTime className="w-3 h-3" />
-            <span className="text-xs font-medium">2 mins away</span>
+            <span className="text-[11px] font-medium">
+              {fareLoading ? (
+                <img className="w-4 h-4" src={Loader} alt="Loading..." />
+              ) : (
+                `${faresData?.formattedDuration} away`
+              )}
+            </span>
           </h5>
           <p className="text-xs">Affordable, Auto ride.</p>
         </div>
         <div className="price text-lg text-right font-semibold text-gray-600 w-20">
-          Rs. {faresData?.fare.auto}
+          {fareLoading ? (
+            <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
+          ) : (
+            `Rs. ${faresData?.fare.auto}`
+          )}
         </div>
       </div>
     </div>

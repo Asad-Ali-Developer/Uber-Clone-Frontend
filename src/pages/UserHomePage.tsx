@@ -238,6 +238,7 @@ const UserHomePage = () => {
               setConfirmRideOpen={setConfirmRideOpen}
               faresData={faresData}
               setVehiclType={setVehiclType}
+              fareLoading={fareLoading}
             />
           </div>
 
