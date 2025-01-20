@@ -46,7 +46,7 @@ const ConfirmRideModal = ({
         >
           <RiArrowDownWideLine className="text-3xl font-bold" />
         </div>
-        <h3 className="text-2xl font-semibold pt-2 mb-5">Confirm your Ride</h3>
+        <h3 className="text-2xl font-semibold mb-10">Confirm your Ride</h3>
 
         <div className="flex flex-col gap-2 items-center">
           <div className="image-styling-1 w-52 h-16 bg-blue-50 rounded-3xl flex justify-center items-start my-3">

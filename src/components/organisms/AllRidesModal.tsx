@@ -120,7 +120,7 @@ const AllRidesModal = ({
         onClick={() => {
           setConfirmRideOpen(true);
           setLocationModal(false);
-          setVehiclType("bike");
+          setVehiclType("auto");
         }}
         className="flex items-center justify-between p-2 border-2 border-zinc-50
             active:border-black rounded-lg cursor-pointer"
