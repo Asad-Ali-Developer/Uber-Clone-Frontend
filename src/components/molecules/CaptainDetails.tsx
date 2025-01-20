@@ -2,8 +2,13 @@ import { MdOutlineAccessTime } from "react-icons/md";
 import { RiSpeedUpLine } from "react-icons/ri";
 import { SlNotebook } from "react-icons/sl";
 import { captainImage } from "../../assets";
+import { useCaptainAuth } from "../../services";
 
 const CaptainDetails = () => {
+  const { authenticatedCaptain } = useCaptainAuth();
+
+  const captainFullName = `${authenticatedCaptain?.fullName.firstName} ${authenticatedCaptain?.fullName.lastName}`;
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex justify-between items-center p-2 mt-2">
@@ -13,7 +18,7 @@ const CaptainDetails = () => {
             className="w-12 h-12 object-cover rounded-full border-2 border-gray-100"
             alt="Captain"
           />
-          <h3 className="text-xl font-medium">Olivia Barani</h3>
+          <h3 className="text-xl font-medium capitalize">{captainFullName}</h3>
         </div>
         <div>
           <h3 className="text-xl font-medium">$ 295.20</h3>

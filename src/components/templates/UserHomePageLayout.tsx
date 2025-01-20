@@ -267,6 +267,9 @@ const UserHomePageLayout = () => {
           >
             <LookingForDriverModal
               setLookingForDriverModalOpen={setLookingForDriverModalOpen}
+              originDestinationData={originDestinationData}
+              faresData={faresData}
+              vehicleType={vehicleType}
             />
           </div>
 
