@@ -39,7 +39,6 @@ const AuthCaptainContextProvider = ({ children }: Props) => {
         }
       );
 
-      // console.log(response);
 
       setAuthenticatedCaptain(response.data.captain);
     } catch (error) {
