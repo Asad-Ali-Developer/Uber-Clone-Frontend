@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { UberLogo, MapTemprary } from "../../assets";
@@ -8,8 +8,22 @@ import {
   RidePopupModal,
   ConfirmRidePopupModal,
 } from "../molecules";
+import { useCaptainAuth, useSocket } from "../../services";
 
 const CaptainHomePageLayout = () => {
+  // Getting Authenticated Captain
+  const { authenticatedCaptain } = useCaptainAuth();
+
+  const captainId = authenticatedCaptain?._id || "";
+
+  const { socket, joinRoom } = useSocket();
+
+  useEffect(() => {
+    if (socket) {
+      joinRoom(captainId, "captain");
+    }
+  }, []);
+
   // ( RidePopupModal: UseRef's and State Variables)
   const [ridePopupModal, setRidePopupModal] = useState(true);
   const ridePopupModalRef = useRef<HTMLDivElement | null>(null);

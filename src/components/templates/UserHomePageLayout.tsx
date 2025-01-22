@@ -19,22 +19,21 @@ import {
   WaitingForDriverModal,
 } from "../organisms";
 import { useSocket, useUserAuth } from "../../services";
-const {authenticatedUser} = useUserAuth();
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
   const { createRide, rideCreationLoading } = useCreateRide();
 
-  const { socket } = useSocket();
+  const { authenticatedUser } = useUserAuth();
 
+  const { socket, joinRoom } = useSocket();
 
   useEffect(() => {
-
-    socket?.emit('join', {})
-
-  }, [])
-
+    if (socket) {
+      joinRoom(authenticatedUser?._id as string, "user");
+    }
+  }, []);
 
   type OriginDestinationData = {
     origin: string;
