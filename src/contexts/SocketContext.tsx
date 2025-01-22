@@ -1,10 +1,8 @@
 import { createContext } from "react";
+import { SocketContextType } from "../interfaces";
 
-interface SocketContextType {
-  sendMessage: (eventName: string, message: string) => void;
-  receiveMessage: (eventName: string, callback: () => {}) => void;
-}
-
-const SocketContext = createContext<SocketContextType | null>(null);
+const SocketContext = createContext<SocketContextType | undefined>(
+  {} as SocketContextType
+);
 
 export default SocketContext;

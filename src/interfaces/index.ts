@@ -12,6 +12,7 @@ import { RouteConfig } from "./RouteConfig";
 import { fareDataResponse, fareResponse, GetFareResponse } from "./getFareResponse";
 import { CreateRideResponse } from "./CreateRideResponse";
 import { RideStatusEnum } from "./CreateRideResponse";
+import { SocketContextType } from "./SocketContextType";
 
 export type {
   APICaptainResponse,
@@ -28,6 +29,7 @@ export type {
   fareResponse,
   CreateRideResponse,
   RideStatusEnum,
+  SocketContextType,
 };
 
 

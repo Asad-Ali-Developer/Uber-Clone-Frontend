@@ -2,13 +2,13 @@ import { ReactNode, useEffect } from "react";
 import { SocketContext } from "../contexts";
 import { io, Socket } from "socket.io-client";
 
-interface ContextProps {
+interface SocketContextProps {
   children: ReactNode;
 }
 
 const socket: Socket = io("http://localhost:4000");
 
-const SocketContextProvider = ({ children }: ContextProps) => {
+const SocketContextProvider = ({ children }: SocketContextProps) => {
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to server!");
@@ -17,10 +17,6 @@ const SocketContextProvider = ({ children }: ContextProps) => {
     socket.on("disconnect", () => {
       console.log("Disconnected to server!");
     });
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   const sendMessage = (eventName: string, message: string) => {
