@@ -1,4 +1,5 @@
+import { Socket } from "socket.io-client";
+
 export interface SocketContextType {
-  sendMessage: (eventName: string, message: string) => void;
-  receiveMessage: (eventName: string, callback: () => {}) => void;
+  socket: Socket | null;
 }

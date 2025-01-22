@@ -1,12 +1,12 @@
-import { useGSAP, } from "@gsap/react";
-import { debounce } from "lodash";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useState, useEffect, useRef } from "react";
-import { UberLogo, MapTemprary } from "../../assets";
+import { debounce } from "lodash";
+import { useEffect, useRef, useState } from "react";
+import { MapTemprary, UberLogo } from "../../assets";
 import {
-  useGetLocationSuggestions,
-  useGetFare,
   useCreateRide,
+  useGetFare,
+  useGetLocationSuggestions,
 } from "../../hooks";
 import { fareDataResponse, LocationSuggestion } from "../../interfaces";
 import { useGSAPAnimationFn } from "../../utils";
@@ -18,11 +18,23 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../organisms";
+import { useSocket, useUserAuth } from "../../services";
+const {authenticatedUser} = useUserAuth();
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
   const { createRide, rideCreationLoading } = useCreateRide();
+
+  const { socket } = useSocket();
+
+
+  useEffect(() => {
+
+    socket?.emit('join', {})
+
+  }, [])
+
 
   type OriginDestinationData = {
     origin: string;

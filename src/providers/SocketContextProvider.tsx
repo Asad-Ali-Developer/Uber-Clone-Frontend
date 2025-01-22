@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SocketContext } from "../contexts";
 import { io, Socket } from "socket.io-client";
 
@@ -6,28 +6,33 @@ interface SocketContextProps {
   children: ReactNode;
 }
 
-const socket: Socket = io("http://localhost:4000");
+const socket: Socket = io(import.meta.env.VITE_BASEURL, {
+  withCredentials: true,
+  transports: ["websocket"],
+});
 
 const SocketContextProvider = ({ children }: SocketContextProps) => {
+  const [socket, setSocket] = useState<Socket | null>(null);
+
   useEffect(() => {
-    socket.on("connect", () => {
+    const socketInstance: Socket = io(import.meta.env.VITE_BASEURL, {
+      withCredentials: true,
+      transports: ["websocket"],
+    });
+
+    setSocket(socketInstance)
+
+    socketInstance.on("connect", () => {
       console.log("Connected to server!");
     });
 
-    socket.on("disconnect", () => {
+    socketInstance.on("disconnect", () => {
       console.log("Disconnected to server!");
     });
   }, []);
 
-  const sendMessage = (eventName: string, message: string) => {
-    socket.emit(eventName, message);
-  };
-  const receiveMessage = (eventName: string, callback: () => {}) => {
-    socket.on(eventName, callback);
-  };
-
   return (
-    <SocketContext.Provider value={{ sendMessage, receiveMessage }}>
+    <SocketContext.Provider value={{ socket }}>
       {children}
     </SocketContext.Provider>
   );
