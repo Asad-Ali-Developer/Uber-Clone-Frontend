@@ -8,28 +8,31 @@ import "./index.css";
 import {
   AuthCaptainContextProvider,
   AuthUserContextProvider,
+  SocketContextProvider,
 } from "./providers/index.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthCaptainContextProvider>
-        <AuthUserContextProvider>
-          <ToastContainer
-            hideProgressBar={false}
-            position="top-right"
-            newestOnTop={false}
-            pauseOnFocusLoss
-            autoClose={3000}
-            theme="light"
-            closeOnClick
-            pauseOnHover
-            rtl={false}
-            draggable
-          />
-          <App />
-        </AuthUserContextProvider>
-      </AuthCaptainContextProvider>
-    </BrowserRouter>
+    <SocketContextProvider>
+      <BrowserRouter>
+        <AuthCaptainContextProvider>
+          <AuthUserContextProvider>
+            <ToastContainer
+              hideProgressBar={false}
+              position="top-right"
+              newestOnTop={false}
+              pauseOnFocusLoss
+              autoClose={3000}
+              theme="light"
+              closeOnClick
+              pauseOnHover
+              rtl={false}
+              draggable
+            />
+            <App />
+          </AuthUserContextProvider>
+        </AuthCaptainContextProvider>
+      </BrowserRouter>
+    </SocketContextProvider>
   </StrictMode>
 );
