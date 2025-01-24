@@ -5,15 +5,26 @@ import { AuthCaptainContextType } from "./AuthCaptainContextType";
 import { AuthUser } from "./AuthUser";
 import { AuthUserContextType } from "./AuthUserContextType";
 import {
+  CreateRideResponse,
+  rideDataSocketResponse,
+  rideSocketReponse,
+  RideStatusEnum,
+} from "./CreateRideResponse";
+import {
   LocationSuggestion,
   LocationSuggestionResponse,
 } from "./LocationSuggestionResponse";
 import { RouteConfig } from "./RouteConfig";
-import { fareDataResponse, fareResponse, GetFareResponse } from "./getFareResponse";
-import { CreateRideResponse } from "./CreateRideResponse";
-import { RideStatusEnum } from "./CreateRideResponse";
 import { SocketContextType } from "./SocketContextType";
-import { LocationCooridinatesTypes, SocketUpdateCaptainLocation } from "./SocketUpdateCaptinLocation";
+import {
+  LocationCooridinatesTypes,
+  SocketUpdateCaptainLocation,
+} from "./SocketUpdateCaptinLocation";
+import {
+  fareDataResponse,
+  fareResponse,
+  GetFareResponse,
+} from "./getFareResponse";
 
 export type {
   APICaptainResponse,
@@ -22,17 +33,17 @@ export type {
   AuthCaptainContextType,
   AuthUser,
   AuthUserContextType,
+  CreateRideResponse,
+  fareDataResponse,
+  fareResponse,
+  GetFareResponse,
+  LocationCooridinatesTypes,
   LocationSuggestion,
   LocationSuggestionResponse,
-  fareDataResponse,
-  RouteConfig,
-  GetFareResponse,
-  fareResponse,
-  CreateRideResponse,
+  rideSocketReponse,
   RideStatusEnum,
+  RouteConfig,
   SocketContextType,
   SocketUpdateCaptainLocation,
-  LocationCooridinatesTypes,
+  rideDataSocketResponse,
 };
-
-

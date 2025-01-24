@@ -45,15 +45,7 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
       socket.emit("update-captain-location", { userId, location });
     }
   };
-
-  // const getCaptainsInRange = (data: any) => {
-  //     console.log(data)
-  // }
-
-  socket?.on("new-ride", (data) => {
-    console.log(data);
-  });
-
+   
   return (
     <SocketContext.Provider value={{ socket, joinRoom, updateCaptainLocation }}>
       {children}

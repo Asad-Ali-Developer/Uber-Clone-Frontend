@@ -1,23 +1,28 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { UberLogo, MapTemprary } from "../../assets";
+import { MapTemprary, UberLogo } from "../../assets";
+import { rideDataSocketResponse } from "../../interfaces";
+import { useCaptainAuth, useSocket } from "../../services";
 import { useGSAPAnimationFn } from "../../utils";
 import {
   CaptainDetails,
-  RidePopupModal,
   ConfirmRidePopupModal,
+  RidePopupModal,
 } from "../molecules";
-import { useCaptainAuth, useSocket } from "../../services";
 
 const CaptainHomePageLayout = () => {
   // ( RidePopupModal: UseRef's and State Variables)
-  const [ridePopupModal, setRidePopupModal] = useState(true);
+  const [ridePopupModal, setRidePopupModal] = useState(false);
   const ridePopupModalRef = useRef<HTMLDivElement | null>(null);
 
   // ( ConfirmRidePopupModal: UseRef's and State Variables)
   const [confirmRidePopupModal, setConfirmRidePopupModal] = useState(false);
   const confirmRidePopupModalRef = useRef<HTMLDivElement | null>(null);
+
+  // Setting-up the Passenger Details Modal
+  const [fareAndPassengerDetails, setFareAndPassengerDetails] =
+    useState<rideDataSocketResponse | null>(null);
 
   useGSAPAnimationFn({
     modalState: ridePopupModal,
@@ -60,6 +65,12 @@ const CaptainHomePageLayout = () => {
     }
   }, [captainId]);
 
+  socket?.on("new-ride", (data: rideDataSocketResponse) => {
+    console.log(data)
+    setRidePopupModal(true);
+    setFareAndPassengerDetails(data);
+  });
+
   return (
     <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
       {/* Logo */}
@@ -94,6 +105,7 @@ const CaptainHomePageLayout = () => {
           className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-full"
         >
           <RidePopupModal
+            fareAndPassengerDetails={fareAndPassengerDetails}
             setRidePopupModal={setRidePopupModal}
             setConfirmRidePopupModal={setConfirmRidePopupModal}
           />

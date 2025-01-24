@@ -1,4 +1,5 @@
 import { AuthCaptain } from "./AuthCaptain";
+import { AuthUser } from "./AuthUser";
 
 export enum RideStatusEnum {
   pending = "pending",
@@ -8,7 +9,7 @@ export enum RideStatusEnum {
   completed = "completed",
 }
 
-interface rideReponse {
+export interface rideReponse {
   userId: string;
   origin: string;
   destination: string;
@@ -37,4 +38,23 @@ export interface CreateRideResponse {
   headers?: any;
   request?: any;
   statusText?: string;
+}
+
+export interface rideSocketReponse {
+  userId: AuthUser;
+  origin: string;
+  destination: string;
+  fare: number;
+  status: RideStatusEnum;
+  otp: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface rideDataSocketResponse {
+  rideWithUser: rideSocketReponse;
+  distance: number;
+  duration: number;
+  formattedDuration: string;
 }
