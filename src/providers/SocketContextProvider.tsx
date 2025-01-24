@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { SocketContext } from "../contexts";
-import { LocationCooridinatesTypes, SocketUpdateCaptainLocation } from "../interfaces";
+import { LocationCooridinatesTypes } from "../interfaces";
 
 interface SocketContextProps {
   children: ReactNode;
@@ -39,12 +39,20 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
     userId: string,
     location: LocationCooridinatesTypes
   ) => {
-    console.log(userId, location);
+    // console.log(userId, location);
 
     if (socket) {
       socket.emit("update-captain-location", { userId, location });
     }
   };
+
+  // const getCaptainsInRange = (data: any) => {
+  //     console.log(data)
+  // }
+
+  socket?.on("new-ride", (data) => {
+    console.log(data);
+  });
 
   return (
     <SocketContext.Provider value={{ socket, joinRoom, updateCaptainLocation }}>

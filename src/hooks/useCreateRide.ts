@@ -29,7 +29,7 @@ const useCreateRide = () => {
         }
       );
 
-      console.log(response)
+      // console.log(response.data.captains.forEach(captain => console.log(captain.fullName)));
 
       return response;
     } catch (error) {

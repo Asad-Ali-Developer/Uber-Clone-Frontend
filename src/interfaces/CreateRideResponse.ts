@@ -1,9 +1,11 @@
+import { AuthCaptain } from "./AuthCaptain";
+
 export enum RideStatusEnum {
-  Pending = "pending",
-  Accepted = "accepted",
-  Ongoing = "ongoing",
-  Rejected = "rejected",
-  Completed = "completed",
+  pending = "pending",
+  accepted = "accepted",
+  ongoing = "ongoing",
+  rejected = "rejected",
+  completed = "completed",
 }
 
 interface rideReponse {
@@ -25,6 +27,7 @@ interface rideDataResponse {
   distance: number;
   duration: number;
   formattedDuration: string;
+  captains: AuthCaptain[];
 }
 
 export interface CreateRideResponse {
