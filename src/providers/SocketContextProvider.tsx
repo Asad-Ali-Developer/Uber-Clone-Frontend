@@ -2,14 +2,11 @@ import { ReactNode, useEffect, useState } from "react";
 import { SocketContext } from "../contexts";
 import { io, Socket } from "socket.io-client";
 
+
+
 interface SocketContextProps {
   children: ReactNode;
 }
-
-const socket: Socket = io(import.meta.env.VITE_BASEURL, {
-  withCredentials: true,
-  transports: ["websocket"],
-});
 
 const SocketContextProvider = ({ children }: SocketContextProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -20,7 +17,7 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
       transports: ["websocket"],
     });
 
-    setSocket(socketInstance)
+    setSocket(socketInstance);
 
     socketInstance.on("connect", () => {
       console.log("Connected to server!");
@@ -31,8 +28,17 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
     });
   }, []);
 
+  const joinRoom = (userId: string, userType: "user" | "captain") => {
+
+    console.log(userId, userType);
+
+    if(socket){
+      socket.emit("join", { userId, userType });
+    }
+  };
+
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, joinRoom }}>
       {children}
     </SocketContext.Provider>
   );

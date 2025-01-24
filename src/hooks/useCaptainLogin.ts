@@ -15,7 +15,6 @@ interface UseCaptainLoginReturn {
 const useCaptainLogin = (): UseCaptainLoginReturn => {
   const { storeTokenInLS } = useCaptainAuth();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
 
   const login = async (data: captainFormDataLogin) => {
@@ -29,7 +28,7 @@ const useCaptainLogin = (): UseCaptainLoginReturn => {
       if (response.status === 200) {
         toast.success(response.data.message);
         storeTokenInLS(response.data.token as string);
-        navigate("/captain/home");
+        navigate("/captain/home", { replace: true });
       }
     } catch (error: any) {
       if (error.response) {
