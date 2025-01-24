@@ -11,19 +11,6 @@ import {
 import { useCaptainAuth, useSocket } from "../../services";
 
 const CaptainHomePageLayout = () => {
-  // Getting Authenticated Captain
-  const { authenticatedCaptain } = useCaptainAuth();
-
-  const captainId = authenticatedCaptain?._id || "";
-
-  const { socket, joinRoom } = useSocket();
-
-  useEffect(() => {
-    if (socket) {
-      joinRoom(captainId, "captain");
-    }
-  }, []);
-
   // ( RidePopupModal: UseRef's and State Variables)
   const [ridePopupModal, setRidePopupModal] = useState(true);
   const ridePopupModalRef = useRef<HTMLDivElement | null>(null);
@@ -41,6 +28,20 @@ const CaptainHomePageLayout = () => {
     modalState: confirmRidePopupModal,
     modalRef: confirmRidePopupModalRef,
   });
+
+  const { authenticatedCaptain } = useCaptainAuth();
+
+  const captainId = authenticatedCaptain?._id;
+
+  const { socket, joinRoom } = useSocket();
+
+  useEffect(() => {
+    if (captainId) {
+      if (socket) {
+        joinRoom(captainId, "captain");
+      }
+    }
+  }, [captainId]);
 
   return (
     <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">

@@ -27,13 +27,17 @@ const UserHomePageLayout = () => {
 
   const { authenticatedUser } = useUserAuth();
 
+  const userId = authenticatedUser?._id;
+
   const { socket, joinRoom } = useSocket();
 
   useEffect(() => {
-    if (socket) {
-      joinRoom(authenticatedUser?._id as string, "user");
+    if (userId) {
+      if (socket) {
+        joinRoom(userId, "user");
+      }
     }
-  }, []);
+  }, [userId]);
 
   type OriginDestinationData = {
     origin: string;
