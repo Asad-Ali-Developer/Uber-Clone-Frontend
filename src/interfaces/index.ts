@@ -13,6 +13,7 @@ import { fareDataResponse, fareResponse, GetFareResponse } from "./getFareRespon
 import { CreateRideResponse } from "./CreateRideResponse";
 import { RideStatusEnum } from "./CreateRideResponse";
 import { SocketContextType } from "./SocketContextType";
+import { LocationCooridinatesTypes, SocketUpdateCaptainLocation } from "./SocketUpdateCaptinLocation";
 
 export type {
   APICaptainResponse,
@@ -30,6 +31,8 @@ export type {
   CreateRideResponse,
   RideStatusEnum,
   SocketContextType,
+  SocketUpdateCaptainLocation,
+  LocationCooridinatesTypes,
 };
 
 

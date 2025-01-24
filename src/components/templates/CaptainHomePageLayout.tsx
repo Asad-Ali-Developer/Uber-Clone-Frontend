@@ -33,13 +33,30 @@ const CaptainHomePageLayout = () => {
 
   const captainId = authenticatedCaptain?._id;
 
-  const { socket, joinRoom } = useSocket();
+  const { socket, joinRoom, updateCaptainLocation } = useSocket();
 
   useEffect(() => {
     if (captainId) {
       if (socket) {
         joinRoom(captainId, "captain");
       }
+
+      // Updating Captain Location
+      const time = 100000;
+      const intervalForUpdatingLocationOfCaptain = setInterval(() => {
+        if (socket) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              updateCaptainLocation(captainId, {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
+            });
+          }
+        }
+      }, time);
+
+      return () => clearInterval(intervalForUpdatingLocationOfCaptain);
     }
   }, [captainId]);
 
