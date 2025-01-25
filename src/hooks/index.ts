@@ -5,6 +5,7 @@ import useCaptainLogin from "./useCaptainLogin";
 import useGetLocationSuggestions from "./useGetLocationSuggestions"
 import useGetFare from "./useGetFare";
 import useCreateRide from "./useCreateRide";
+import useConfirmRideByCaptain from "./useConfirmRideByCaptain";
 
 export {
   useUserSignup,
@@ -14,4 +15,5 @@ export {
   useGetLocationSuggestions,
   useGetFare,
   useCreateRide,
+  useConfirmRideByCaptain,
 };

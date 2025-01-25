@@ -66,9 +66,13 @@ const CaptainHomePageLayout = () => {
   }, [captainId]);
 
   socket?.on("new-ride", (data: rideDataSocketResponse) => {
-    console.log(data)
+    console.log(data);
     setRidePopupModal(true);
     setFareAndPassengerDetails(data);
+  });
+
+  socket?.on("confirm-ride-by-captain", (data) => {
+    console.log(data);
   });
 
   return (
