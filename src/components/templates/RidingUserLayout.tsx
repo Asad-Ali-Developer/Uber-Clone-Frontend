@@ -44,7 +44,7 @@ const RidingUserLayout = () => {
               ) : (
                 <>
                   {vehicleType === "car" && (
-                    <img src={Car} alt="Car" className="w-24" />
+                    <img src={Car} alt="Car" className="w-20" />
                   )}
                   {vehicleType === "bike" && (
                     <img src={Bike} alt="Bike" className="w-24" />

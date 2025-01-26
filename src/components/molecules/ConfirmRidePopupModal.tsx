@@ -20,7 +20,7 @@ const ConfirmRidePopupModal = ({
   const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
-  const {fareAndPassengerDetails} = useFareAndPassengerDetails()
+  const { fareAndPassengerDetails } = useFareAndPassengerDetails();
 
   const { submitOtp } = useSubmitOtp();
 
@@ -91,21 +91,27 @@ const ConfirmRidePopupModal = ({
 
         <div className="w-full flex flex-col">
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <FaLocationDot />
+            <div className="w-3">
+              <FaLocationDot />
+            </div>
             <div className="pickup">
               <h4 className="text-lg font-semibold">Origin: </h4>
               <p className="text-sm -mt-1 text-zinc-600">{ride?.origin}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <TbLocationFilled />
+            <div className="w-3">
+              <TbLocationFilled />
+            </div>
             <div className="destination">
               <h4 className="text-lg font-semibold">Destination: </h4>
               <p className="text-sm -mt-1 text-zinc-600">{ride?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
-            <IoIosCash />
+            <div className="w-3">
+              <IoIosCash />
+            </div>
             <div className="cash">
               <h4 className="text-lg font-semibold">Rs. {ride?.fare}</h4>
               <p className="text-sm -mt-1 text-zinc-600 font-medium">Fare</p>

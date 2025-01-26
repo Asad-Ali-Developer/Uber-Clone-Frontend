@@ -11,13 +11,16 @@ const useCompleteRideByCaptain = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${baseURL}/rides/complete-ride`, {
-        params: { rideId },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${captainToken}`,
-        },
-      });
+      const response = await axios.post(
+        `${baseURL}/rides/complete-ride`,
+        rideId,
+        {
+          headers: {
+            Authorization: `Bearer ${captainToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       return response;
     } catch (error) {

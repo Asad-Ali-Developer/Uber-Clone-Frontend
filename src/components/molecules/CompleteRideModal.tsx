@@ -1,9 +1,11 @@
+import { Dispatch, SetStateAction } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
+import { toast } from "react-toastify";
 import { captainImage } from "../../assets";
-import { Dispatch, SetStateAction } from "react";
+import { useCompleteRideByCaptain } from "../../hooks";
 import { useFareAndPassengerDetails } from "../../store";
 
 interface Props {
@@ -12,6 +14,7 @@ interface Props {
 
 const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
   const { fareAndPassengerDetails } = useFareAndPassengerDetails();
+  const { completeRide, loading } = useCompleteRideByCaptain();
 
   const user = fareAndPassengerDetails?.rideWithUser.userId;
 
@@ -19,7 +22,26 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
 
   const ride = fareAndPassengerDetails?.rideWithUser;
 
+  const rideId = fareAndPassengerDetails?.rideWithUser._id || ""
+  console.log(rideId)
+
   const distance = fareAndPassengerDetails?.distance;
+
+  const handleCompleteRide = async () => {
+    setConfirmRidePopupModal(false);
+    try {
+      // console.log(rideId)
+      const response = await completeRide(rideId)
+      console.log(response)
+      if (response?.status === 200) {
+        toast.success("Ride Completed Successfully!");
+      } else {
+        toast.error("Error completing Ride!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="px-2 py-4">
@@ -50,7 +72,9 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
 
         <div className="w-full flex flex-col">
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <FaLocationDot />
+            <div className="w-3">
+              <FaLocationDot />
+            </div>
             <div className="pickup">
               <h4 className="text-lg font-semibold">Origin:</h4>
               <p className="text-sm -mt-1 text-zinc-600">
@@ -59,7 +83,9 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <TbLocationFilled />
+            <div className="w-3">
+              <TbLocationFilled />
+            </div>
             <div className="destination">
               <h4 className="text-lg font-semibold">Destination:</h4>
               <p className="text-sm -mt-1 text-zinc-600">
@@ -68,7 +94,9 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
-            <IoIosCash />
+            <div className="w-3">
+              <IoIosCash />
+            </div>
             <div className="cash">
               <h4 className="text-lg font-semibold">
                 Rs. {ride ? ride?.fare : "500"}
@@ -79,8 +107,10 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
         </div>
         <button
           type="submit"
-          onClick={() => setConfirmRidePopupModal(false)}
-          className="bg-green-600 hover:bg-green-700 text-white w-full p-4 rounded-md font-medium flex justify-center items-center mt-5"
+          onClick={handleCompleteRide}
+          className={`${
+            loading ? "bg-green-400" : "bg-green-600"
+          } hover:bg-green-700 text-white w-full p-4 rounded-md font-medium flex justify-center items-center mt-5`}
         >
           Finish Ride
         </button>

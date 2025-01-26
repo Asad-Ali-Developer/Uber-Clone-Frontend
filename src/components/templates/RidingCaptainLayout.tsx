@@ -50,7 +50,10 @@ const RidingCaptainLayout = () => {
 
         <div className="flex items-center justify-between w-full mt-3">
           <h3 className="text-xl font-semibold text-white">4KM Away!</h3>
-          <button className="bg-green-600 hover:bg-green-700 text-white px-12 py-3 rounded-md font-medium">
+          <button
+            onClick={() => setConfirmRidePopupModal(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-12 py-3 rounded-md font-medium"
+          >
             Complete Ride
           </button>
         </div>
