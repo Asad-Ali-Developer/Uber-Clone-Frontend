@@ -8,7 +8,11 @@ import {
   useGetFare,
   useGetLocationSuggestions,
 } from "../../hooks";
-import { fareDataResponse, LocationSuggestion } from "../../interfaces";
+import {
+  confirmRideResponseByCaptain,
+  fareDataResponse,
+  LocationSuggestion,
+} from "../../interfaces";
 import { useGSAPAnimationFn } from "../../utils";
 import {
   AllLocationsModal,
@@ -19,11 +23,13 @@ import {
   WaitingForDriverModal,
 } from "../organisms";
 import { useSocket, useUserAuth } from "../../services";
+import { useConfirmRideDataStore } from "../../store";
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
   const { createRide, rideCreationLoading } = useCreateRide();
+  const { setConfirmRideData } = useConfirmRideDataStore();
 
   const { authenticatedUser } = useUserAuth();
 
@@ -205,6 +211,25 @@ const UserHomePageLayout = () => {
     modalState: waitingForDriverModalOpen,
     modalRef: waitingForDriverModalRef,
   });
+
+  // When captains confirms ride this will open the WaitingForDriverModal
+  useEffect(() => {
+    if (socket) {
+      const handleConfirmRide = (data: confirmRideResponseByCaptain) => {
+        console.log(data);
+        setConfirmRideData(data); // Update Zustand store
+        setLookingForDriverModalOpen(false);
+        setWaitingForDriverModalOpen(true); // Open the modal
+      };
+
+      socket?.on("confirm-ride-by-captain", handleConfirmRide);
+
+      // Cleanup the listener on unmount or dependency change
+      return () => {
+        socket.off("confirm-ride-by-captain", handleConfirmRide);
+      };
+    }
+  }, [socket, setConfirmRideData, setWaitingForDriverModalOpen]);
 
   return (
     <div className="h-full overflow-hidden relative">

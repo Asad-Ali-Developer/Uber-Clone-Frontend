@@ -4,7 +4,9 @@ import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
 import { captainImage } from "../../assets";
+import { useConfirmRideByCaptain } from "../../hooks";
 import { rideDataSocketResponse } from "../../interfaces";
+import { useCaptainAuth } from "../../services";
 
 interface Props {
   setRidePopupModal: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +21,27 @@ const RidePopupModal = ({
 }: Props) => {
   const passenger = fareAndPassengerDetails?.rideWithUser;
   const passengerFullName = `${passenger?.userId.fullName.firstName} ${passenger?.userId.fullName.lastName}`;
+
+  const rideId = fareAndPassengerDetails?.rideWithUser._id;
+
+  const { authenticatedCaptain } = useCaptainAuth();
+
+  const captainId = authenticatedCaptain?._id;
+
+  const { confirmRide } = useConfirmRideByCaptain();
+
+  const handleConfirmRide = async () => {
+    setConfirmRidePopupModal(true);
+
+    try {
+      if (captainId && rideId) {
+        const response = await confirmRide(rideId, captainId);
+        return response;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="px-2 py-4">
@@ -48,8 +71,10 @@ const RidePopupModal = ({
 
         <div className="w-full flex flex-col">
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <FaLocationDot />
-            <div className="pickup">
+            <div className="w-3">
+              <FaLocationDot />
+            </div>
+            <div className="pickup w-auto">
               <h4 className="text-lg font-semibold">Origin: </h4>
               <p className="text-sm -mt-1 text-zinc-600">
                 {fareAndPassengerDetails?.rideWithUser.origin}
@@ -57,7 +82,9 @@ const RidePopupModal = ({
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
-            <TbLocationFilled />
+            <div className="w-3">
+              <TbLocationFilled />
+            </div>
             <div className="destination">
               <h4 className="text-lg font-semibold">Destination: </h4>
               <p className="text-sm -mt-1 text-zinc-600">
@@ -66,7 +93,9 @@ const RidePopupModal = ({
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
-            <IoIosCash />
+            <div className="w-3">
+              <IoIosCash />
+            </div>
             <div className="cash">
               <h4 className="text-lg font-semibold">Fare</h4>
               <p className="text-sm -mt-1 text-zinc-600 font-medium">
@@ -78,7 +107,7 @@ const RidePopupModal = ({
 
         <div className="flex flex-col items-center gap-2 w-full mt-5">
           <button
-            onClick={() => setConfirmRidePopupModal(true)}
+            onClick={handleConfirmRide}
             className="bg-green-600 hover:bg-green-700 text-white w-full p-3.5 rounded-md font-medium"
           >
             Accept

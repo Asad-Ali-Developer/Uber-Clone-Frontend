@@ -65,15 +65,15 @@ const CaptainHomePageLayout = () => {
     }
   }, [captainId]);
 
-  socket?.on("new-ride", (data: rideDataSocketResponse) => {
-    console.log(data);
-    setRidePopupModal(true);
-    setFareAndPassengerDetails(data);
-  });
-
-  socket?.on("confirm-ride-by-captain", (data) => {
-    console.log(data);
-  });
+  useEffect(() => {
+    if (socket) {
+      socket?.on("new-ride", (data: rideDataSocketResponse) => {
+        console.log(data);
+        setRidePopupModal(true);
+        setFareAndPassengerDetails(data);
+      });
+    }
+  }, [socket]);
 
   return (
     <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
@@ -121,6 +121,7 @@ const CaptainHomePageLayout = () => {
         >
           <ConfirmRidePopupModal
             setRidePopupModal={setRidePopupModal}
+            fareAndPassengerDetails={fareAndPassengerDetails}
             setConfirmRidePopupModal={setConfirmRidePopupModal}
           />
         </div>

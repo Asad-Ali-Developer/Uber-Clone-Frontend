@@ -19,6 +19,7 @@ export interface rideReponse {
   _id: string;
   createdAt: string;
   updatedAt: string;
+  vehicleType: string;
 }
 
 interface rideDataResponse {

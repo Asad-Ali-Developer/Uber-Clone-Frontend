@@ -20,6 +20,7 @@ import {
   LocationCooridinatesTypes,
   SocketUpdateCaptainLocation,
 } from "./SocketUpdateCaptinLocation";
+import { confirmRideResponseByCaptain } from "./confirmRideResponseByCaptain";
 import {
   fareDataResponse,
   fareResponse,
@@ -46,4 +47,5 @@ export type {
   SocketContextType,
   SocketUpdateCaptainLocation,
   rideDataSocketResponse,
+  confirmRideResponseByCaptain,
 };
