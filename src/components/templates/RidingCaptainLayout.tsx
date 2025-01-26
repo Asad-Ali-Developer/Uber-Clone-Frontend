@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { RiArrowUpWideLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { UberLogo, MapTemprary } from "../../assets";
+import { MapTemprary, UberLogo } from "../../assets";
 import { useGSAPAnimationFn } from "../../utils";
 import { CompleteRideModal } from "../molecules";
 
@@ -50,7 +50,10 @@ const RidingCaptainLayout = () => {
 
         <div className="flex items-center justify-between w-full mt-3">
           <h3 className="text-xl font-semibold text-white">4KM Away!</h3>
-          <button className="bg-green-600 hover:bg-green-700 text-white px-12 py-3 rounded-md font-medium">
+          <button
+            onClick={() => setConfirmRidePopupModal(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-12 py-3 rounded-md font-medium"
+          >
             Complete Ride
           </button>
         </div>
@@ -60,7 +63,9 @@ const RidingCaptainLayout = () => {
         ref={completeRideModalRef}
         className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-full"
       >
-        <CompleteRideModal setConfirmRidePopupModal={setConfirmRidePopupModal} />
+        <CompleteRideModal
+          setConfirmRidePopupModal={setConfirmRidePopupModal}
+        />
       </div>
     </div>
   );

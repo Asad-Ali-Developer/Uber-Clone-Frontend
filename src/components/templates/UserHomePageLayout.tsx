@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MapTemprary, UberLogo } from "../../assets";
 import {
   useCreateRide,
@@ -13,6 +14,8 @@ import {
   fareDataResponse,
   LocationSuggestion,
 } from "../../interfaces";
+import { useSocket, useUserAuth } from "../../services";
+import { useConfirmRideDataStore } from "../../store";
 import { useGSAPAnimationFn } from "../../utils";
 import {
   AllLocationsModal,
@@ -22,20 +25,17 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../organisms";
-import { useSocket, useUserAuth } from "../../services";
-import { useConfirmRideDataStore } from "../../store";
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
   const { getFare, fareLoading } = useGetFare();
   const { createRide, rideCreationLoading } = useCreateRide();
   const { setConfirmRideData } = useConfirmRideDataStore();
-
+  const { socket, joinRoom } = useSocket();
   const { authenticatedUser } = useUserAuth();
+  const navigate = useNavigate();
 
   const userId = authenticatedUser?._id;
-
-  const { socket, joinRoom } = useSocket();
 
   useEffect(() => {
     if (userId) {
@@ -230,6 +230,19 @@ const UserHomePageLayout = () => {
       };
     }
   }, [socket, setConfirmRideData, setWaitingForDriverModalOpen]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("ride-started", (data) => {
+        console.log(data);
+        navigate("/user/riding", { replace: true });
+      });
+    }
+
+    return () => {
+      socket?.off("ride-started");
+    };
+  }, [socket]);
 
   return (
     <div className="h-full overflow-hidden relative">

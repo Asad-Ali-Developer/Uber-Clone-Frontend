@@ -10,6 +10,7 @@ import {
   ConfirmRidePopupModal,
   RidePopupModal,
 } from "../molecules";
+import { useFareAndPassengerDetails } from "../../store";
 
 const CaptainHomePageLayout = () => {
   // ( RidePopupModal: UseRef's and State Variables)
@@ -21,8 +22,10 @@ const CaptainHomePageLayout = () => {
   const confirmRidePopupModalRef = useRef<HTMLDivElement | null>(null);
 
   // Setting-up the Passenger Details Modal
-  const [fareAndPassengerDetails, setFareAndPassengerDetails] =
-    useState<rideDataSocketResponse | null>(null);
+  // const [fareAndPassengerDetails, setFareAndPassengerDetails] =
+  //   useState<rideDataSocketResponse | null>(null);
+
+  const { setFareAndPassengerDetails } = useFareAndPassengerDetails();
 
   useGSAPAnimationFn({
     modalState: ridePopupModal,
@@ -109,7 +112,6 @@ const CaptainHomePageLayout = () => {
           className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-full"
         >
           <RidePopupModal
-            fareAndPassengerDetails={fareAndPassengerDetails}
             setRidePopupModal={setRidePopupModal}
             setConfirmRidePopupModal={setConfirmRidePopupModal}
           />
@@ -121,7 +123,6 @@ const CaptainHomePageLayout = () => {
         >
           <ConfirmRidePopupModal
             setRidePopupModal={setRidePopupModal}
-            fareAndPassengerDetails={fareAndPassengerDetails}
             setConfirmRidePopupModal={setConfirmRidePopupModal}
           />
         </div>
