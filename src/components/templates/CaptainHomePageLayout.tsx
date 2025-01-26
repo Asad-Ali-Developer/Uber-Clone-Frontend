@@ -10,7 +10,6 @@ import {
   ConfirmRidePopupModal,
   RidePopupModal,
 } from "../molecules";
-import { useConfirmRideDataStore } from "../../store";
 
 const CaptainHomePageLayout = () => {
   // ( RidePopupModal: UseRef's and State Variables)
@@ -66,15 +65,15 @@ const CaptainHomePageLayout = () => {
     }
   }, [captainId]);
 
-  socket?.on("new-ride", (data: rideDataSocketResponse) => {
-    console.log(data);
-    setRidePopupModal(true);
-    setFareAndPassengerDetails(data);
-  });
-
-  const {confirmRideData} = useConfirmRideDataStore();
-
-  console.log("Confirm Ride Data from the Captain Home Page", confirmRideData);
+  useEffect(() => {
+    if (socket) {
+      socket?.on("new-ride", (data: rideDataSocketResponse) => {
+        console.log(data);
+        setRidePopupModal(true);
+        setFareAndPassengerDetails(data);
+      });
+    }
+  }, [socket]);
 
   return (
     <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
@@ -122,6 +121,7 @@ const CaptainHomePageLayout = () => {
         >
           <ConfirmRidePopupModal
             setRidePopupModal={setRidePopupModal}
+            fareAndPassengerDetails={fareAndPassengerDetails}
             setConfirmRidePopupModal={setConfirmRidePopupModal}
           />
         </div>

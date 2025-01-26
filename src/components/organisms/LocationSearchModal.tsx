@@ -37,6 +37,7 @@ const LocationSearchModal = ({
 }: Props) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
 
   useEffect(() => {
     setOrigin(originDestinationData.origin);
@@ -66,13 +67,24 @@ const LocationSearchModal = ({
   const handleFindTrip = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleGetFare();
-    
+
     // To Close the AllLocationsModal
     setAllLocationModalOpen(false);
 
     // To Open the AllRidesModal
     setAllLocationsModalToOpenRideModal(true);
   };
+
+  useEffect(() => {
+    if (!originDestinationData.origin || !originDestinationData.destination) {
+      setDisableButton(true);
+    } else if (
+      originDestinationData.origin ||
+      originDestinationData.destination
+    ) {
+      setDisableButton(false);
+    }
+  }, [originDestinationData]);
 
   return (
     <div className="bg-white">
@@ -124,9 +136,9 @@ const LocationSearchModal = ({
 
           {allLocationModalOpen && (
             <button
-              disabled={fareLoading}
+              disabled={fareLoading || disableButton}
               className={`${
-                fareLoading ? "bg-zinc-700" : "bg-black"
+                fareLoading || disableButton ? "bg-zinc-700" : "bg-black"
               } text-white px-6 py-3 rounded-lg w-full -mt-1 font-medium`}
             >
               Find trip

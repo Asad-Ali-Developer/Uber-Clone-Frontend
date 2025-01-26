@@ -92,8 +92,8 @@ const ConfirmRideModal = ({
                 <IoIosCash />
               </div>
               <div className="cash">
-                <h4 className="text-lg font-semibold">Fare: </h4>
-                <p className="text-zinc-600 font-medium">{fare}</p>
+                <h4 className="text-lg font-semibold">{fare}</h4>
+                <p className="text-zinc-600 font-medium">Fare</p>
               </div>
             </div>
           </div>

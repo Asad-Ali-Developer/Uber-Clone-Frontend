@@ -19,7 +19,6 @@ const LookingForDriverModal = ({
   faresData,
   vehicleType,
 }: Props) => {
-
   const fare = getFareByVehicleType(vehicleType, faresData);
 
   return (
@@ -31,7 +30,10 @@ const LookingForDriverModal = ({
       >
         <RiArrowDownWideLine className="text-3xl font-bold" />
       </div>
-      <h3 className="text-2xl font-semibold pt-5 mb-5">Looking for Driver</h3>
+
+      <div className="w-full h-1 mt-3 bg-gradient-to-r from-blue-500 via-white to-blue-500 bg-[length:200%_100%] animate-gradient-move"></div>
+
+      <h3 className="text-2xl font-semibold pt-3 mb-5">Looking for Driver</h3>
 
       <div className="w-full flex flex-col">
         <div className="flex items-center gap-5 p-3 border-b-2">
@@ -56,9 +58,7 @@ const LookingForDriverModal = ({
           <IoIosCash />
           <div className="cash">
             <h4 className="text-lg font-semibold">Rs. {fare}</h4>
-            <p className="text-sm -mt-1 text-zinc-600 font-medium">
-              Fare
-            </p>
+            <p className="text-sm -mt-1 text-zinc-600 font-medium">Fare</p>
           </div>
         </div>
       </div>

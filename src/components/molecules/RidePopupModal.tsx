@@ -4,10 +4,9 @@ import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
 import { captainImage } from "../../assets";
-import { rideDataSocketResponse } from "../../interfaces";
 import { useConfirmRideByCaptain } from "../../hooks";
+import { rideDataSocketResponse } from "../../interfaces";
 import { useCaptainAuth } from "../../services";
-import { useConfirmRideDataStore } from "../../store";
 
 interface Props {
   setRidePopupModal: Dispatch<SetStateAction<boolean>>;
@@ -25,8 +24,6 @@ const RidePopupModal = ({
 
   const rideId = fareAndPassengerDetails?.rideWithUser._id;
 
-  const { setConfirmRideData } = useConfirmRideDataStore();
-
   const { authenticatedCaptain } = useCaptainAuth();
 
   const captainId = authenticatedCaptain?._id;
@@ -39,9 +36,7 @@ const RidePopupModal = ({
     try {
       if (captainId && rideId) {
         const response = await confirmRide(rideId, captainId);
-
-        console.log(response);
-        setConfirmRideData(response?.data);
+        return response;
       }
     } catch (error) {
       console.log(error);
