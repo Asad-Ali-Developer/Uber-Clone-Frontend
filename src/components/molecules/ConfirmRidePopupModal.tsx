@@ -3,23 +3,26 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 import { captainImage } from "../../assets";
-import { useConfirmRideDataStore } from "../../store";
-import { rideDataSocketResponse } from "../../interfaces";
+import { useSubmitOtp } from "../../hooks";
+import { useFareAndPassengerDetails } from "../../store";
 
 interface Props {
   setRidePopupModal: Dispatch<SetStateAction<boolean>>;
   setConfirmRidePopupModal: Dispatch<SetStateAction<boolean>>;
-  fareAndPassengerDetails: rideDataSocketResponse | null;
 }
 
 const ConfirmRidePopupModal = ({
   setRidePopupModal,
   setConfirmRidePopupModal,
-  fareAndPassengerDetails,
 }: Props) => {
   const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const navigate = useNavigate();
+  const {fareAndPassengerDetails} = useFareAndPassengerDetails()
+
+  const { submitOtp } = useSubmitOtp();
 
   const user = fareAndPassengerDetails?.rideWithUser.userId;
 
@@ -27,7 +30,7 @@ const ConfirmRidePopupModal = ({
 
   const ride = fareAndPassengerDetails?.rideWithUser;
 
-  const handleSubmitOTPAndStartRide = (e: FormEvent) => {
+  const handleSubmitOTPAndStartRide = async (e: FormEvent) => {
     e.preventDefault(); // Prevent form submission
 
     if (!otp) {
@@ -37,15 +40,26 @@ const ConfirmRidePopupModal = ({
 
     const otpLength = otp.length; // Get the length of OTP
 
-    if (otpLength < 4 || otpLength > 4) {
-      setErrorMessage("OTP must be 4 digits long.");
+    if (otpLength < 6 || otpLength > 6) {
+      setErrorMessage("OTP must be 6 digits long.");
       return;
     }
-
-    // Simulating OTP verification
     console.log("OTP Submitted:", otp);
-    setErrorMessage("");
-    // setConfirmRidePopupModal(false);
+
+    const rideId = ride?._id as string;
+    console.log("Ride Id: ", rideId);
+
+    const response = await submitOtp(otp, rideId);
+    console.log(response);
+
+    if (response?.status === 200) {
+      setConfirmRidePopupModal(false);
+      navigate("/captain/riding");
+    } else {
+      setErrorMessage(response?.data.message);
+    }
+
+    return response;
   };
 
   return (
@@ -80,18 +94,14 @@ const ConfirmRidePopupModal = ({
             <FaLocationDot />
             <div className="pickup">
               <h4 className="text-lg font-semibold">Origin: </h4>
-              <p className="text-sm -mt-1 text-zinc-600">
-               {ride?.origin}
-              </p>
+              <p className="text-sm -mt-1 text-zinc-600">{ride?.origin}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <TbLocationFilled />
             <div className="destination">
               <h4 className="text-lg font-semibold">Destination: </h4>
-              <p className="text-sm -mt-1 text-zinc-600">
-                {ride?.destination}
-              </p>
+              <p className="text-sm -mt-1 text-zinc-600">{ride?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">

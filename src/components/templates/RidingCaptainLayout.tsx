@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { RiArrowUpWideLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { UberLogo, MapTemprary } from "../../assets";
+import { MapTemprary, UberLogo } from "../../assets";
 import { useGSAPAnimationFn } from "../../utils";
 import { CompleteRideModal } from "../molecules";
 
@@ -60,7 +60,9 @@ const RidingCaptainLayout = () => {
         ref={completeRideModalRef}
         className="absolute bottom-0 p-3 w-full bg-white rounded-t-xl z-10 translate-y-full"
       >
-        <CompleteRideModal setConfirmRidePopupModal={setConfirmRidePopupModal} />
+        <CompleteRideModal
+          setConfirmRidePopupModal={setConfirmRidePopupModal}
+        />
       </div>
     </div>
   );

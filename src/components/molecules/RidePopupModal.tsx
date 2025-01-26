@@ -5,20 +5,20 @@ import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
 import { captainImage } from "../../assets";
 import { useConfirmRideByCaptain } from "../../hooks";
-import { rideDataSocketResponse } from "../../interfaces";
 import { useCaptainAuth } from "../../services";
+import { useFareAndPassengerDetails } from "../../store";
 
 interface Props {
   setRidePopupModal: Dispatch<SetStateAction<boolean>>;
   setConfirmRidePopupModal: Dispatch<SetStateAction<boolean>>;
-  fareAndPassengerDetails: rideDataSocketResponse | null;
 }
 
 const RidePopupModal = ({
   setRidePopupModal,
   setConfirmRidePopupModal,
-  fareAndPassengerDetails,
 }: Props) => {
+  const { fareAndPassengerDetails } = useFareAndPassengerDetails();
+
   const passenger = fareAndPassengerDetails?.rideWithUser;
   const passengerFullName = `${passenger?.userId.fullName.firstName} ${passenger?.userId.fullName.lastName}`;
 

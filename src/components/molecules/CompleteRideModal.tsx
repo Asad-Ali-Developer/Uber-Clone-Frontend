@@ -4,12 +4,23 @@ import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
 import { captainImage } from "../../assets";
 import { Dispatch, SetStateAction } from "react";
+import { useFareAndPassengerDetails } from "../../store";
 
 interface Props {
   setConfirmRidePopupModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
+  const { fareAndPassengerDetails } = useFareAndPassengerDetails();
+
+  const user = fareAndPassengerDetails?.rideWithUser.userId;
+
+  const userFullName = `${user?.fullName.firstName} ${user?.fullName.lastName}`;
+
+  const ride = fareAndPassengerDetails?.rideWithUser;
+
+  const distance = fareAndPassengerDetails?.distance;
+
   return (
     <div className="px-2 py-4">
       <div
@@ -28,35 +39,41 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
               className="w-12 h-12 object-cover rounded-full"
               alt="captainImage"
             />
-            <h3 className="text-lg font-medium">Olivia Barani</h3>
+            <h3 className="text-lg font-medium">
+              {user ? userFullName : "Captain"}
+            </h3>
           </div>
-          <h3 className="text-xl font-medium">2.3KM</h3>
+          <h3 className="text-xl font-medium">
+            {distance ? distance : "12"}KM
+          </h3>
         </div>
 
         <div className="w-full flex flex-col">
           <div className="flex items-center gap-5 p-3 border-b-2">
             <FaLocationDot />
             <div className="pickup">
-              <h4 className="text-lg font-semibold">562/11-A</h4>
+              <h4 className="text-lg font-semibold">Origin:</h4>
               <p className="text-sm -mt-1 text-zinc-600">
-                Kaikondrahalli, Bengaluru, Karnataka
+                {ride ? ride?.origin : "USA, America"}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <TbLocationFilled />
             <div className="destination">
-              <h4 className="text-lg font-semibold">562/11-A</h4>
+              <h4 className="text-lg font-semibold">Destination:</h4>
               <p className="text-sm -mt-1 text-zinc-600">
-                Kaikondrahalli, Bengaluru, Karnataka
+                {ride ? ride.destination : "USA, America"}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <IoIosCash />
             <div className="cash">
-              <h4 className="text-lg font-semibold">562/11-A</h4>
-              <p className="text-sm -mt-1 text-zinc-600 font-medium">Rs. 200</p>
+              <h4 className="text-lg font-semibold">
+                Rs. {ride ? ride?.fare : "500"}
+              </h4>
+              <p className="text-sm -mt-1 text-zinc-600 font-medium">Fare</p>
             </div>
           </div>
         </div>

@@ -6,6 +6,8 @@ import useGetLocationSuggestions from "./useGetLocationSuggestions"
 import useGetFare from "./useGetFare";
 import useCreateRide from "./useCreateRide";
 import useConfirmRideByCaptain from "./useConfirmRideByCaptain";
+import useSubmitOtp from "./useSubmitOtp";
+import useCompleteRideByCaptain from "./useCompleteRideByCaptain";
 
 export {
   useUserSignup,
@@ -16,4 +18,6 @@ export {
   useGetFare,
   useCreateRide,
   useConfirmRideByCaptain,
+  useSubmitOtp,
+  useCompleteRideByCaptain,
 };
