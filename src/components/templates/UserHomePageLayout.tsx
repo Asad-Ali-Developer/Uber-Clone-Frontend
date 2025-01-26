@@ -206,6 +206,17 @@ const UserHomePageLayout = () => {
     modalRef: waitingForDriverModalRef,
   });
 
+
+  // When captains confirms ride this will open the WaitingForDriverModal
+  useEffect(() => {
+    if (socket) {
+      socket?.on("confirm-ride-by-captain", (data) => {
+        console.log(data);
+        setWaitingForDriverModalOpen(true);
+      });
+    }
+  });
+
   return (
     <div className="h-full overflow-hidden relative">
       <div className="relative lg:w-96 lg:m-auto sm:w-96 sm:m-auto h-auto">
