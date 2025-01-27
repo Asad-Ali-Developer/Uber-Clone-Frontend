@@ -8,6 +8,7 @@ import RidePopupModal from "./RidePopupModal";
 import ConfirmRidePopupModal from "./ConfirmRidePopupModal";
 import CompleteRideModal from "./CompleteRideModal";
 import VehicleType from "./VehicleType";
+import LiveTracking from "./LiveTracking";
 
 export {
   UserLogout,
@@ -20,4 +21,5 @@ export {
   ConfirmRidePopupModal,
   CompleteRideModal,
   VehicleType,
+  LiveTracking,
 };

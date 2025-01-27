@@ -3,7 +3,8 @@ import gsap from "gsap";
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MapTemprary, UberLogo } from "../../assets";
+import { toast } from "react-toastify";
+import { UberLogo } from "../../assets";
 import {
   useCreateRide,
   useGetFare,
@@ -17,6 +18,7 @@ import {
 import { useSocket, useUserAuth } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
 import { useGSAPAnimationFn } from "../../utils";
+import { LiveTracking } from "../molecules";
 import {
   AllLocationsModal,
   AllRidesModal,
@@ -25,7 +27,6 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../organisms";
-import { toast } from "react-toastify";
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
@@ -254,18 +255,22 @@ const UserHomePageLayout = () => {
       <div className="relative lg:w-96 lg:m-auto sm:w-96 sm:m-auto h-auto">
         <img
           src={UberLogo}
-          className="absolute w-20 top-5 left-5"
+          className="absolute w-20 top-5 left-5 z-20"
           alt="Uber Logo"
         />
 
         {/* Map Image for temporary use */}
-        <img
+        {/* <img
           src={MapTemprary}
           alt="Map"
           className="h-[100vh] w-full object-cover"
-        />
+        /> */}
 
-        <div className="h-screen absolute top-0 w-full flex flex-col justify-end">
+        <div className="">
+          <LiveTracking />
+        </div>
+
+        <div className="h-screen absolute top-0 w-full flex flex-col justify-end z-20">
           <LocationSearchModal
             inputRef={inputRef}
             originDestinationData={originDestinationData}
@@ -293,7 +298,7 @@ const UserHomePageLayout = () => {
 
           <div
             ref={ridesModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
+            className="absolute z-20 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
           >
             <AllRidesModal
               setLocationModal={setAllLocationsModalToOpenRideModal}
@@ -306,7 +311,7 @@ const UserHomePageLayout = () => {
 
           <div
             ref={confirmRideModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
+            className="absolute z-20 bottom-0 bg-white w-full px-2 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
           >
             <ConfirmRideModal
               setConfirmRideOpen={setConfirmRideOpen}
@@ -321,7 +326,7 @@ const UserHomePageLayout = () => {
 
           <div
             ref={lookingForDriverModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
+            className="absolute z-20 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl translate-y-full border-t-2 border-zinc-200"
           >
             <LookingForDriverModal
               setLookingForDriverModalOpen={setLookingForDriverModalOpen}
@@ -333,7 +338,7 @@ const UserHomePageLayout = () => {
 
           <div
             ref={waitingForDriverModalRef}
-            className="absolute z-10 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl border-t-2 translate-y-full border-zinc-200"
+            className="absolute z-20 bottom-0 bg-white w-full px-4 py-8 flex flex-col gap-1 rounded-t-xl border-t-2 translate-y-full border-zinc-200"
           >
             <WaitingForDriverModal
               setWaitingForDriverModalOpen={setWaitingForDriverModalOpen}
