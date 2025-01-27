@@ -25,6 +25,7 @@ import {
   LookingForDriverModal,
   WaitingForDriverModal,
 } from "../organisms";
+import { toast } from "react-toastify";
 
 const UserHomePageLayout = () => {
   const { getSuggestions, loading } = useGetLocationSuggestions();
@@ -233,10 +234,14 @@ const UserHomePageLayout = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("ride-started", (data) => {
+      const handleSocket = (data: any) => {
         console.log(data);
-        navigate("/user/riding", { replace: true });
-      });
+        toast.success("Ride started!");
+        setTimeout(() => {
+          navigate("/user/riding", { replace: true });
+        }, 200);
+      };
+      socket.on("ride-started", handleSocket);
     }
 
     return () => {

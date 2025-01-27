@@ -13,7 +13,7 @@ const useCompleteRideByCaptain = () => {
 
       const response = await axios.post(
         `${baseURL}/rides/complete-ride`,
-        rideId,
+        { rideId },
         {
           headers: {
             Authorization: `Bearer ${captainToken}`,

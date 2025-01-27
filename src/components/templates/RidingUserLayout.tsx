@@ -1,12 +1,19 @@
+import { useEffect } from "react";
 import { IoIosCash } from "react-icons/io";
 import { TbLocationFilled } from "react-icons/tb";
 import { TiHomeOutline } from "react-icons/ti";
-import { Link } from "react-router-dom";
-import { MapTemprary, Car, Bike, Auto } from "../../assets";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { MapTemprary } from "../../assets";
+import { rideCompletedDataResponse } from "../../interfaces";
+import { useSocket } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
+import { VehicleType } from "../molecules";
 
 const RidingUserLayout = () => {
   const { confirmRideData } = useConfirmRideDataStore();
+  const { socket } = useSocket();
+  const navigate = useNavigate();
 
   const captain = confirmRideData?.captain;
 
@@ -14,7 +21,24 @@ const RidingUserLayout = () => {
 
   const ride = confirmRideData?.updatedRide;
 
-  const vehicleType = ride?.vehicleType;
+  const vehicleType = ride?.vehicleType as string;
+
+  useEffect(() => {
+    if (socket) {
+      const handleRideCompleted = (data: rideCompletedDataResponse) => {
+        console.log(data);
+        toast.success(data.messageNotification);
+        navigate("/user/home");
+      };
+
+      socket.on("ride-completed", handleRideCompleted);
+
+      // Cleanup function to remove the listener
+      return () => {
+        socket.off("ride-completed", handleRideCompleted);
+      };
+    }
+  }, [socket]);
 
   return (
     <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
@@ -35,25 +59,11 @@ const RidingUserLayout = () => {
         />
       </div>
 
-      <div className="px-6 h-1/2 md:h-1/2 lg:h-1/2 sm:h-1/2 flex flex-col justify-between py-3">
+      <div className="px-6 h-1/2 md:h-1/2 lg:h-1/2 sm:h-1/2 flex flex-col justify-between">
         <div className="flex flex-col gap-auto lg:gap-4">
           <div className="image-texts flex justify-between items-center lg:mt-3">
             <div className="img">
-              {!vehicleType ? (
-                <img src={Car} alt="Car" className="w-24" />
-              ) : (
-                <>
-                  {vehicleType === "car" && (
-                    <img src={Car} alt="Car" className="w-20" />
-                  )}
-                  {vehicleType === "bike" && (
-                    <img src={Bike} alt="Bike" className="w-24" />
-                  )}
-                  {vehicleType === "auto" && (
-                    <img src={Auto} alt="Auto" className="w-24" />
-                  )}
-                </>
-              )}
+              <VehicleType vehicleType={vehicleType} />
             </div>
 
             <div className="text-right">
