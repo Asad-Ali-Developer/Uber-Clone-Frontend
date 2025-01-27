@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { captainImage } from "../../assets";
 import { useCompleteRideByCaptain } from "../../hooks";
 import { useFareAndPassengerDetails } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   setConfirmRidePopupModal: Dispatch<SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ interface Props {
 const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
   const { fareAndPassengerDetails } = useFareAndPassengerDetails();
   const { completeRide, loading } = useCompleteRideByCaptain();
+  const navigate = useNavigate();
 
   const user = fareAndPassengerDetails?.rideWithUser.userId;
 
@@ -22,8 +24,10 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
 
   const ride = fareAndPassengerDetails?.rideWithUser;
 
-  const rideId = fareAndPassengerDetails?.rideWithUser._id || ""
-  console.log(rideId)
+  const rideId = fareAndPassengerDetails?.rideWithUser._id || "";
+  console.log(rideId);
+
+  // const captainId = fareAndPassengerDetails?.rideWithUser.captainId || ""
 
   const distance = fareAndPassengerDetails?.distance;
 
@@ -31,10 +35,11 @@ const CompleteRideModal = ({ setConfirmRidePopupModal }: Props) => {
     setConfirmRidePopupModal(false);
     try {
       // console.log(rideId)
-      const response = await completeRide(rideId)
-      console.log(response)
+      const response = await completeRide(rideId);
+      console.log(response);
       if (response?.status === 200) {
-        toast.success("Ride Completed Successfully!");
+        toast.success(response.data.message);
+        navigate("/captain/home");
       } else {
         toast.error("Error completing Ride!");
       }

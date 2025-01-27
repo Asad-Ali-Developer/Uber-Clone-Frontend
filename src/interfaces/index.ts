@@ -6,6 +6,7 @@ import { AuthUser } from "./AuthUser";
 import { AuthUserContextType } from "./AuthUserContextType";
 import {
   CreateRideResponse,
+  rideCompletedDataResponse,
   rideDataSocketResponse,
   rideSocketReponse,
   RideStatusEnum,
@@ -48,4 +49,5 @@ export type {
   SocketUpdateCaptainLocation,
   rideDataSocketResponse,
   confirmRideResponseByCaptain,
+  rideCompletedDataResponse,
 };

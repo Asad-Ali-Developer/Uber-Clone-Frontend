@@ -1,10 +1,10 @@
+import { Dispatch, SetStateAction } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
-import { Auto, Bike, Car } from "../../assets";
-import { Dispatch, SetStateAction } from "react";
 import { useConfirmRideDataStore } from "../../store";
+import { VehicleType } from "../molecules";
 
 interface Props {
   setWaitingForDriverModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ const WaitingForDriverModal = ({ setWaitingForDriverModalOpen }: Props) => {
 
   const ride = confirmRideData?.updatedRide;
 
-  const vehicleType = confirmRideData?.updatedRide.vehicleType;
+  const vehicleType = confirmRideData?.updatedRide.vehicleType as string;
 
   return (
     <div className="relative">
@@ -32,18 +32,12 @@ const WaitingForDriverModal = ({ setWaitingForDriverModalOpen }: Props) => {
 
       <div className="image-texts flex justify-between items-center p-3 border-b-2 h-24">
         <div className="img">
-          {vehicleType === "car" && (
-            <img src={Car} alt="Car" className="w-24" />
-          )}
-          {vehicleType === "bike" && (
-            <img src={Bike} alt="Bike" className="w-24" />
-          )}
-          {vehicleType === "auto" && (
-            <img src={Auto} alt="Auto" className="w-24" />
-          )}
+          <VehicleType vehicleType={vehicleType} />
         </div>
         <div className="text-right">
-          <div className="font-semibold text-lg capitalize">{captainFullName}</div>
+          <div className="font-semibold text-lg capitalize">
+            {captainFullName}
+          </div>
           <div className="text-xl font-semibold text-zinc-600 -my-1">
             {captain?.vehicle.plate}
           </div>

@@ -3,9 +3,9 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoIosCash } from "react-icons/io";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { TbLocationFilled } from "react-icons/tb";
-import { Auto, Bike, Car } from "../../assets";
 import { fareDataResponse } from "../../interfaces";
 import { getFareByVehicleType } from "../../utils";
+import { VehicleType } from "../molecules";
 
 interface Props {
   setConfirmRideOpen: Dispatch<SetStateAction<boolean>>;
@@ -51,22 +51,13 @@ const ConfirmRideModal = ({
         <div className="flex flex-col gap-2 items-center">
           <div className="image-styling-1 w-52 h-16 bg-blue-50 rounded-3xl flex justify-center items-start my-3">
             <div className="image-styling-2 w-32 h-12 bg-blue-100 rounded-3xl flex justify-center items-center">
-              {/* <img src={Car} alt="Ride" className="w-24 -mt-10" /> */}
-              {vehicleType === "car" && (
-                <img src={Car} alt="Car" className="w-24 -mt-10" />
-              )}
-              {vehicleType === "bike" && (
-                <img src={Bike} alt="Bike" className="w-24 -mt-10" />
-              )}
-              {vehicleType === "auto" && (
-                <img src={Auto} alt="Auto" className="w-24 -mt-10" />
-              )}
+              <VehicleType vehicleType={vehicleType} />
             </div>
           </div>
 
           <div className="w-full flex flex-col">
             <div className="flex items-center gap-5 p-3 border-b-2">
-              <div className="icon">
+              <div className="icon w-3">
                 <FaLocationDot />
               </div>
               <div className="pickup">
@@ -77,7 +68,7 @@ const ConfirmRideModal = ({
               </div>
             </div>
             <div className="flex items-center gap-5 p-3 border-b-2">
-              <div className="icon">
+              <div className="icon w-3">
                 <TbLocationFilled />
               </div>
               <div className="destination">
@@ -88,7 +79,7 @@ const ConfirmRideModal = ({
               </div>
             </div>
             <div className="flex items-center gap-5 p-3">
-              <div className="icon">
+              <div className="icon w-3">
                 <IoIosCash />
               </div>
               <div className="cash">

@@ -10,6 +10,7 @@ import {
   AuthUserContextProvider,
   SocketContextProvider,
 } from "./providers/index.ts";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -7,6 +7,8 @@ import CaptainDetails from "./CaptainDetails";
 import RidePopupModal from "./RidePopupModal";
 import ConfirmRidePopupModal from "./ConfirmRidePopupModal";
 import CompleteRideModal from "./CompleteRideModal";
+import VehicleType from "./VehicleType";
+import LiveTracking from "./LiveTracking";
 
 export {
   UserLogout,
@@ -18,4 +20,6 @@ export {
   RidePopupModal,
   ConfirmRidePopupModal,
   CompleteRideModal,
+  VehicleType,
+  LiveTracking,
 };

@@ -59,3 +59,9 @@ export interface rideDataSocketResponse {
   duration: number;
   formattedDuration: string;
 }
+
+export interface rideCompletedDataResponse {
+  messageNotification: string;
+  rideWithUser: rideSocketReponse;
+  ride: rideReponse
+}
