@@ -266,9 +266,7 @@ const UserHomePageLayout = () => {
           className="h-[100vh] w-full object-cover"
         /> */}
 
-        {/* <div className=""> */}
-          <LiveTracking />
-        {/* </div> */}
+        <LiveTracking  />
 
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end z-20">
           <LocationSearchModal
@@ -286,7 +284,10 @@ const UserHomePageLayout = () => {
             }
           />
 
-          <div className="h-0 bg-white overflow-y-auto" ref={allLocationModalRef}>
+          <div
+            className="h-0 bg-white overflow-y-auto"
+            ref={allLocationModalRef}
+          >
             <AllLocationsModal
               originSuggestions={originSuggestions}
               destinationSuggestions={destinationSuggestions}

@@ -3,8 +3,14 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Loader } from "../../assets";
 
-const LiveTracking: React.FC = () => {
-  const [currentPosition, setCurrentPosition] = useState<[number, number] | null>(null);
+interface Props {
+  height?: string;
+}
+
+const LiveTracking: React.FC = ({ height }: Props) => {
+  const [currentPosition, setCurrentPosition] = useState<
+    [number, number] | null
+  >(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
 
@@ -60,7 +66,10 @@ const LiveTracking: React.FC = () => {
   }, [currentPosition]);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "70vh" }}>
+    <div
+      style={{ position: "relative", width: "100%" }}
+      className={`${height ? height : "h-[75vh]"}`}
+    >
       {/* Map with Lower z-Index */}
       <div
         id="map"

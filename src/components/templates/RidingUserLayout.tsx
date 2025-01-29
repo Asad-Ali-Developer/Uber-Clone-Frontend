@@ -8,7 +8,7 @@ import { MapTemprary } from "../../assets";
 import { rideCompletedDataResponse } from "../../interfaces";
 import { useSocket } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
-import { VehicleType } from "../molecules";
+import { LiveTracking, VehicleType } from "../molecules";
 
 const RidingUserLayout = () => {
   const { confirmRideData } = useConfirmRideDataStore();
@@ -41,7 +41,7 @@ const RidingUserLayout = () => {
   }, [socket]);
 
   return (
-    <div className="h-screen w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
+    <div className="h-[100vh] w-full lg:w-96 lg:m-auto sm:w-96 sm:m-auto relative overflow-hidden">
       {/* Logo */}
       <Link
         to="/user/home"
@@ -51,15 +51,16 @@ const RidingUserLayout = () => {
       </Link>
 
       {/* Map Image for temporary use */}
-      <div className="img">
+      {/* <div className="img">
         <img
           src={MapTemprary}
           alt="Map"
           className="h-full w-full object-cover"
         />
-      </div>
+      </div> */}
+      <LiveTracking />
 
-      <div className="px-6 h-1/2 md:h-1/2 lg:h-1/2 sm:h-1/2 flex flex-col justify-between">
+      <div className="px-6 bg-white md:h-1/2 lg:h-1/2 sm:h-1/2 flex flex-col justify-between absolute bottom-3 w-full py-2">
         <div className="flex flex-col gap-auto lg:gap-4">
           <div className="image-texts flex justify-between items-center lg:mt-3">
             <div className="img">
