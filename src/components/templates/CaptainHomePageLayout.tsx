@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { MapTemprary, UberLogo } from "../../assets";
+import { UberLogo } from "../../assets";
 import { rideDataSocketResponse } from "../../interfaces";
 import { useCaptainAuth, useSocket } from "../../services";
+import { useFareAndPassengerDetails } from "../../store";
 import { useGSAPAnimationFn } from "../../utils";
 import {
   CaptainDetails,
   ConfirmRidePopupModal,
-  LiveTracking,
   LiveTrackingForCaptain,
   RidePopupModal,
 } from "../molecules";
-import { useFareAndPassengerDetails } from "../../store";
 
 const CaptainHomePageLayout = () => {
   // ( RidePopupModal: UseRef's and State Variables)
@@ -52,7 +51,7 @@ const CaptainHomePageLayout = () => {
       }
 
       // Updating Captain Location
-      const time = 100000;
+      const time = 5000;
       const intervalForUpdatingLocationOfCaptain = setInterval(() => {
         if (socket) {
           if (navigator.geolocation) {

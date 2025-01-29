@@ -2,15 +2,12 @@ import { ReactNode, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { SocketContext } from "../contexts";
 import { LocationCooridinatesTypes } from "../interfaces";
-import { useCaptainAuth, useUserAuth } from "../services";
 
 interface SocketContextProps {
   children: ReactNode;
 }
 
 const SocketContextProvider = ({ children }: SocketContextProps) => {
-  const { authenticatedUser } = useUserAuth();
-  const { authenticatedCaptain } = useCaptainAuth();
 
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -29,7 +26,7 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
     socketInstance.on("disconnect", () => {
       console.log("Disconnected to server!");
     });
-  }, [authenticatedUser, authenticatedCaptain]);
+  }, []);
 
   const joinRoom = (userId: string, userType: "user" | "captain") => {
     console.log(userId, userType);
