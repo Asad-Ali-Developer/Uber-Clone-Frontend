@@ -20,6 +20,7 @@ const RidingUserLayout = () => {
 
   const ride = confirmRideData?.updatedRide;
 
+  // VehicleType
   const vehicleType = ride?.vehicleType as string;
 
   useEffect(() => {
