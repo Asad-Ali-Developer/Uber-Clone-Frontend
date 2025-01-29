@@ -4,7 +4,6 @@ import { TbLocationFilled } from "react-icons/tb";
 import { TiHomeOutline } from "react-icons/ti";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { MapTemprary } from "../../assets";
 import { rideCompletedDataResponse } from "../../interfaces";
 import { useSocket } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
@@ -21,6 +20,7 @@ const RidingUserLayout = () => {
 
   const ride = confirmRideData?.updatedRide;
 
+  // VehicleType
   const vehicleType = ride?.vehicleType as string;
 
   useEffect(() => {
