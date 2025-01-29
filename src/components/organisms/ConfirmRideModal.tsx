@@ -51,7 +51,11 @@ const ConfirmRideModal = ({
         <div className="flex flex-col gap-2 items-center">
           <div className="image-styling-1 w-52 h-16 bg-blue-50 rounded-3xl flex justify-center items-start my-3">
             <div className="image-styling-2 w-32 h-12 bg-blue-100 rounded-3xl flex justify-center items-center">
-              <VehicleType vehicleType={vehicleType} />
+              <VehicleType
+                width="w-24"
+                marginTop="-mt-10"
+                vehicleType={vehicleType}
+              />
             </div>
           </div>
 

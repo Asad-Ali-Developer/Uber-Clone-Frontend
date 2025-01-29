@@ -37,7 +37,9 @@ const LookingForDriverModal = ({
 
       <div className="w-full flex flex-col">
         <div className="flex items-center gap-5 p-3 border-b-2">
-          <FaLocationDot />
+          <div className="w-3">
+            <FaLocationDot />
+          </div>
           <div className="pickup">
             <h4 className="text-lg font-semibold">Origin:</h4>
             <p className="text-sm -mt-1 text-zinc-600">
@@ -46,7 +48,9 @@ const LookingForDriverModal = ({
           </div>
         </div>
         <div className="flex items-center gap-5 p-3 border-b-2">
-          <TbLocationFilled />
+          <div className="w-3">
+            <TbLocationFilled />
+          </div>
           <div className="destination">
             <h4 className="text-lg font-semibold">Destination:</h4>
             <p className="text-sm -mt-1 text-zinc-600">
@@ -55,7 +59,9 @@ const LookingForDriverModal = ({
           </div>
         </div>
         <div className="flex items-center gap-5 p-3">
-          <IoIosCash />
+          <div className="w-3">
+            <IoIosCash />
+          </div>
           <div className="cash">
             <h4 className="text-lg font-semibold">Rs. {fare}</h4>
             <p className="text-sm -mt-1 text-zinc-600 font-medium">Fare</p>

@@ -8,6 +8,7 @@ interface SocketContextProps {
 }
 
 const SocketContextProvider = ({ children }: SocketContextProps) => {
+
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const SocketContextProvider = ({ children }: SocketContextProps) => {
       socket.emit("update-captain-location", { userId, location });
     }
   };
-   
+
   return (
     <SocketContext.Provider value={{ socket, joinRoom, updateCaptainLocation }}>
       {children}

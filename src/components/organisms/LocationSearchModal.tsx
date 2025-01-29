@@ -48,7 +48,7 @@ const LocationSearchModal = ({
     const { name, value } = e.target;
 
     if (name === "origin") {
-      setOrigin(value);
+      // setOrigin(value);
       // setOrigin(originDestinationData.origin)
       setOriginDestinationData((prevData) => ({
         ...prevData,

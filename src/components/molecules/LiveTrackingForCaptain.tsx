@@ -1,41 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import React, { useEffect, useRef, useState } from "react";
 import { Loader } from "../../assets";
+import { useCaptainAuth } from "../../services";
 
-interface Props {
-  height?: string;
-}
-
-const LiveTracking: React.FC = ({ height }: Props) => {
+const LiveTrackingForCaptain: React.FC = () => {
   const [currentPosition, setCurrentPosition] = useState<
     [number, number] | null
   >(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
 
-  // Function to update location
-  const updateLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentPosition([latitude, longitude]);
-        },
-        (error) => console.error("Error getting location: ", error),
-        { enableHighAccuracy: true }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
+  const { authenticatedCaptain } = useCaptainAuth();
 
-  // Fetch user's location every 5 seconds
+  // Extract latitude and longitude correctly
   useEffect(() => {
-    updateLocation();
-    const interval = setInterval(updateLocation, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    if (authenticatedCaptain?.location) {
+      const { lat, lng } = authenticatedCaptain.location;
+      setCurrentPosition([lat, lng]); // Correctly setting [number, number]
+    }
+  }, [authenticatedCaptain?.location]);
 
   // Initialize map once when the component mounts
   useEffect(() => {
@@ -66,10 +50,7 @@ const LiveTracking: React.FC = ({ height }: Props) => {
   }, [currentPosition]);
 
   return (
-    <div
-      style={{ position: "relative", width: "100%" }}
-      className={`${height ? height : "h-[75vh]"}`}
-    >
+    <div style={{ position: "relative", width: "100%", height: "70vh" }}>
       {/* Map with Lower z-Index */}
       <div
         id="map"
@@ -111,4 +92,4 @@ const LiveTracking: React.FC = ({ height }: Props) => {
   );
 };
 
-export default LiveTracking;
+export default LiveTrackingForCaptain;

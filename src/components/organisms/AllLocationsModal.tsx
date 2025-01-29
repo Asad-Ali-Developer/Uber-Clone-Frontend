@@ -32,7 +32,7 @@ const AllLocationsModal = ({
     : destinationSuggestions;
 
   return (
-    <div className="px-4 flex flex-col gap-1 h-full overflow-y-auto relative">
+    <div className="px-4 flex flex-col gap-1 overflow-y-scroll relative">
       {/* Locations */}
       {loading ? (
         <img
