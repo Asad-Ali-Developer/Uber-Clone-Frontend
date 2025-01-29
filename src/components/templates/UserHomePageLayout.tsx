@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { UberLogo } from "../../assets";
+import { MapTemprary, UberLogo } from "../../assets";
 import {
   useCreateRide,
   useGetFare,
@@ -18,7 +18,6 @@ import {
 import { useSocket, useUserAuth } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
 import { useGSAPAnimationFn } from "../../utils";
-import { LiveTracking } from "../molecules";
 import {
   AllLocationsModal,
   AllRidesModal,
@@ -260,15 +259,15 @@ const UserHomePageLayout = () => {
         />
 
         {/* Map Image for temporary use */}
-        {/* <img
+        <img
           src={MapTemprary}
           alt="Map"
           className="h-[100vh] w-full object-cover"
-        /> */}
+        />
 
-        <div className="">
+        {/* <div className="">
           <LiveTracking />
-        </div>
+        </div> */}
 
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end z-20">
           <LocationSearchModal
