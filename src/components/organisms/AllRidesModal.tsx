@@ -64,7 +64,7 @@ const AllRidesModal = ({
           </h5>
           <p className="text-xs">Affordable, Compact ride.</p>
         </div>
-        <div className="price text-lg text-right font-semibold text-gray-600 w-20">
+        <div className="price text-right font-semibold text-gray-600 w-20">
           {fareLoading ? (
             <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
           ) : (
@@ -106,7 +106,7 @@ const AllRidesModal = ({
           </h5>
           <p className="text-xs">Affordable, Bike ride.</p>
         </div>
-        <div className="price text-lg text-right  font-semibold text-gray-600 w-20">
+        <div className="price text-right  font-semibold text-gray-600 w-20">
           {fareLoading ? (
             <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
           ) : (
@@ -148,7 +148,7 @@ const AllRidesModal = ({
           </h5>
           <p className="text-xs">Affordable, Auto ride.</p>
         </div>
-        <div className="price text-lg text-right font-semibold text-gray-600 w-20">
+        <div className="price text-right font-semibold text-gray-600 w-20">
           {fareLoading ? (
             <img className="w-8 h-8 ml-6" src={Loader} alt="Loading..." />
           ) : (

@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { MapTemprary, UberLogo } from "../../assets";
+import { UberLogo } from "../../assets";
 import {
   useCreateRide,
   useGetFare,
@@ -18,6 +18,7 @@ import {
 import { useSocket, useUserAuth } from "../../services";
 import { useConfirmRideDataStore } from "../../store";
 import { useGSAPAnimationFn } from "../../utils";
+import { LiveTracking } from "../molecules";
 import {
   AllLocationsModal,
   AllRidesModal,
@@ -176,7 +177,7 @@ const UserHomePageLayout = () => {
   useGSAP(() => {
     if (allLocationsModalOpen) {
       gsap.to(allLocationModalRef.current, {
-        height: "62.5%",
+        height: "50%",
         paddingTop: 20,
       });
       gsap.to(locationModalCloseRef.current, {
@@ -250,24 +251,24 @@ const UserHomePageLayout = () => {
   }, [socket]);
 
   return (
-    <div className="h-full overflow-hidden relative">
+    <div className="h-[100vh] overflow-hidden relative">
       <div className="relative lg:w-96 lg:m-auto sm:w-96 sm:m-auto h-auto">
         <img
           src={UberLogo}
-          className="absolute w-20 top-5 left-5 z-20"
+          className="absolute w-20 top-5 right-5 z-20"
           alt="Uber Logo"
         />
 
         {/* Map Image for temporary use */}
-        <img
+        {/* <img
           src={MapTemprary}
           alt="Map"
           className="h-[100vh] w-full object-cover"
-        />
+        /> */}
 
-        {/* <div className="">
+        {/* <div className=""> */}
           <LiveTracking />
-        </div> */}
+        {/* </div> */}
 
         <div className="h-screen absolute top-0 w-full flex flex-col justify-end z-20">
           <LocationSearchModal
@@ -285,7 +286,7 @@ const UserHomePageLayout = () => {
             }
           />
 
-          <div className="h-0 bg-white" ref={allLocationModalRef}>
+          <div className="h-0 bg-white overflow-y-auto" ref={allLocationModalRef}>
             <AllLocationsModal
               originSuggestions={originSuggestions}
               destinationSuggestions={destinationSuggestions}

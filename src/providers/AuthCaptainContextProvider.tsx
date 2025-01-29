@@ -12,7 +12,6 @@ const AuthCaptainContextProvider = ({ children }: Props) => {
   const [authenticatedCaptain, setAuthenticatedCaptain] =
     useState<AuthCaptain | null>(null);
 
-
   // Get token from local storage - for checking if user is logged in
   const [captainToken, setCaptainToken] = useState(
     localStorage.getItem("serverTokenCaptain")
@@ -38,7 +37,6 @@ const AuthCaptainContextProvider = ({ children }: Props) => {
           },
         }
       );
-
 
       setAuthenticatedCaptain(response.data.captain);
     } catch (error) {

@@ -14,7 +14,7 @@ const UserLogout = () => {
       try {
         const response = await axios.get(`${baseURL}/users/logout`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("serverToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("serverTokenUser")}`,
             "Content-Type": "application/json",
           },
         });

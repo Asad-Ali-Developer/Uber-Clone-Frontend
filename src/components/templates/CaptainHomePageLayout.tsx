@@ -8,6 +8,8 @@ import { useGSAPAnimationFn } from "../../utils";
 import {
   CaptainDetails,
   ConfirmRidePopupModal,
+  LiveTracking,
+  LiveTrackingForCaptain,
   RidePopupModal,
 } from "../molecules";
 import { useFareAndPassengerDetails } from "../../store";
@@ -94,13 +96,15 @@ const CaptainHomePageLayout = () => {
       </div>
 
       {/* Map Image for temporary use */}
-      <div className="img h-3/5">
+      {/* <div className="img h-3/5">
         <img
           src={MapTemprary}
           alt="Map"
           className="h-full w-full object-cover"
         />
-      </div>
+      </div> */}
+
+      <LiveTrackingForCaptain />
 
       <div className="md:h-2/5 lg:h-2/5 sm:h-2/5">
         <div className="captain-details p-3">
