@@ -50,7 +50,7 @@ const LiveTracking: React.FC = ({ height }: Props) => {
 
       // Add tile layer
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        // attribution: "&copy; OpenStreetMap contributors",
+        attribution: "&copy; OpenStreetMap contributors",
       }).addTo(mapRef.current);
 
       // Add marker
